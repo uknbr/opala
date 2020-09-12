@@ -1,0 +1,6 @@
+urlextract==1.0.0
+prettytable==0.7.2
+requests==2.18.4
+SQLAlchemy==1.3.18
+beautifulsoup4==4.9.1
+paho_mqtt==1.5.0
