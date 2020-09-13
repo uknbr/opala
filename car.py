@@ -85,6 +85,8 @@ def get_region(value):
 
 def get_year(value):
     options = {
+        1950: 0,
+        1955: 1,
         1960: 2,
         1965: 3,
         1970: 4,
@@ -94,6 +96,34 @@ def get_year(value):
         1990: 8,
         1991: 9,
         1992: 10,
+        1993: 11,
+        1994: 12,
+        1995: 13,
+        1996: 14,
+        1997: 15,
+        1998: 16,
+        1999: 17,
+        2000: 18,
+        2001: 19,
+        2002: 20,
+        2003: 21,
+        2004: 22,
+        2005: 23,
+        2006: 24,
+        2007: 25,
+        2008: 26,
+        2009: 27,
+        2010: 28,
+        2011: 29,
+        2012: 30,
+        2013: 31,
+        2014: 32,
+        2015: 33,
+        2016: 34,
+        2017: 35,
+        2018: 36,
+        2019: 37,
+        2020: 38,
     }
 
     try:
@@ -119,45 +149,94 @@ def telegram_bot_send_text(message):
         try:
             send_text = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
             response = requests.get(send_text, params=items, verify=ssl_verify)
+            return True
         except requests.exceptions.RequestException as e:
             logger.error(f"Telegram message: {e.strerror}")
+            return False
 
         if response.status_code != 200:
             logger.error("Failed to send notification to Telegram")
+            return False
 
 
 def score_by_year(year):
-    options = {1974: -2, 1975: 1, 1976: 1, 1977: 1, 1978: 2, 1979: 3, 1980: -2}
-    return options.get(year, 0)
+    result = 0
+    for value in car_score_year.split(","):
+        if int(value) == int(year):
+            result += 1
+            logger.debug(f"<+> SCORE (year) = {year} [{value}]")
+        else:
+            logger.debug(f"<=> SCORE (year) = {year} [{value}]")
+    return result
 
 
 def score_by_color(color):
-    options = {
-        "Preto": 3,
-        "Vermelho": 1,
-        "Verde": 1,
-        "Branco": -1,
-        "Laranja": 3,
-        "Azul": 1,
-        "Amarelo": 2,
-    }
-    return options.get(color, 0)
+    result = 0
+    for value in car_score_color.split(","):
+        if str.lower(value) == str.lower(color):
+            result += 1
+            logger.debug(f"<+> SCORE (color) = {color} [{value}]")
+        else:
+            logger.debug(f"<=> SCORE (color) = {color} [{value}]")
+    return result
 
 
 def score_by_doors(doors):
-    options = {2: 1, 4: -2}
-    return options.get(doors, 0)
+    result = 0
+    if int(car_score_door) == int(doors):
+        result += 1
+        logger.debug(f"<+> SCORE (doors) = {doors} [{car_score_door}]")
+    else:
+        logger.debug(f"<=> SCORE (doors) = {doors} [{car_score_door}]")
+    return result
+
+
+def score_by_fuel(fuel):
+    result = 0
+    if str.lower(car_score_fuel).replace("á","a") == str.lower(fuel):
+        result += 1
+        logger.debug(f"<+> SCORE (fuel) = {fuel} [{car_score_fuel}]")
+    else:
+        logger.debug(f"<=> SCORE (fuel) = {fuel} [{car_score_fuel}]")
+    return result
+
+
+def score_by_tranmission(transmission):
+    result = 0
+    if str.lower(car_score_transmission) == str.lower(transmission):
+        result += 1
+        logger.debug(f"<+> SCORE (transmission) = {transmission} [{car_score_transmission}]")
+    else:
+        logger.debug(f"<=> SCORE (transmission) = {transmission} [{car_score_transmission}]")
+    return result
+
+
+def score_by_price(price):
+    result = 0
+    if int(price) <= int(car_score_price):
+        if int(price) > 0:
+            result += 1
+            logger.debug(f"<+> SCORE (price) = {price} [{car_score_price}]")
+        else:
+            logger.debug(f"<=> SCORE (price) = {price} [{car_score_price}]")
+    return result
 
 
 def score_by_keyword(name, desc):
-    point = 0
-    search = ["ss", "6"]
-    for s in search:
-        if s in name.lower():
-            point += 2
-        if s in desc.lower():
-            point += 1
-    return point
+    result = 0
+    for value in car_score_keyword.split(","):
+        if str.lower(value) in str.lower(name):
+            result += 1
+            logger.debug(f"<+> SCORE (keyword - name) = {value} [{name}]")
+        else:
+            logger.debug(f"<=> SCORE (keyword - name) = {value} [{name}]")
+        
+        if str.lower(value) in str.lower(desc):
+            result += 1
+            logger.debug(f"<+> SCORE (keyword - desc) = {value} [{desc}]")
+        else:
+            logger.debug(f"<=> SCORE (keyword - desc) = {value} [{desc}]")            
+    return result
 
 
 def request_web(page, url):
@@ -408,14 +487,13 @@ def get_car(car):
                     )
                     car_score = car_score + score_by_doors(_numberOfDoors)
                     car_score = car_score + score_by_color(_carColor)
+                    car_score = car_score + score_by_fuel(_fuelType)
+                    car_score = car_score + score_by_tranmission(_vehicleTransmission)
+                    car_score = car_score + score_by_price(_price)
                     car_score = car_score + score_by_keyword(
                         offer["makesOffer"]["itemOffered"]["name"],
                         offer["makesOffer"]["itemOffered"]["description"],
                     )
-                    if _vehicleTransmission == "Manual":
-                        car_score += 1
-                    if details["pictures"] > 10:
-                        car_score += 1
 
                     sql = table_score.insert()
                     sql = table_score.insert().values(code=_code, score=car_score)
@@ -445,16 +523,16 @@ def get_car(car):
 
                     """ Telegram """
                     telegram_message = f"Novo anúncio foi encontrado em {_state}!\nValor: {_price}\nAno: {_modelDate}\nPontos: {car_score}\n{car}"
-                    telegram_bot_send_text(telegram_message)
-                    sql = table_notification.insert().values(
-                        code=_code,
-                        message=re.sub(
-                            r"http\S+", "", telegram_message.replace("\n", " ")
-                        ),
-                        date=get_datetime_epoch(),
-                    )
-                    conn.execute(sql)
-                    logger.debug(f"Added data into table (first): history ({_price})")
+                    if telegram_bot_send_text(telegram_message):
+                        sql = table_notification.insert().values(
+                            code=_code,
+                            message=re.sub(
+                                r"http\S+", "", telegram_message.replace("\n", " ")
+                            ),
+                            date=get_datetime_epoch(),
+                        )
+                        conn.execute(sql)
+                        logger.debug(f"Added data into table: notification")
 
                     return 1
                 else:
@@ -530,7 +608,7 @@ def get_logger(
     level=logging.DEBUG,
     formatter=logging.Formatter("%(asctime)s | %(levelname)s | %(message)s"),
 ):
-    fileHandler = logging.FileHandler(f"{base_path}olx/log/opala.log")
+    fileHandler = logging.FileHandler(f"{base_path}olx/log/car.log")
     fileHandler.setLevel(level)
     fileHandler.setFormatter(formatter)
     logger = logging.getLogger(name)
@@ -670,11 +748,11 @@ for folder in folders:
 """ Start """
 logger = get_logger(__file__)
 bar = "----------------"
-logger.info(f"O  P  A  L  A\n\n{bar}\n--- Starting ---\n{bar}")
+logger.info(f"O L X\n\n{bar}\n--- Starting ---\n{bar}")
 time_start = time.time()
 
 """ Database """
-engine = create_engine(f"sqlite:///{base_path}olx/db/opala.db", echo=False)
+engine = create_engine(f"sqlite:///{base_path}olx/db/car.db", echo=False)
 meta = MetaData()
 table_url = db_create_table_url()
 table_notification = db_create_table_notification()
@@ -686,7 +764,7 @@ table_offer = db_create_table_offer()
 
 """ Parameters """
 logger.info("Reading parameters")
-parser = argparse.ArgumentParser(description="[OLX] Find your Opala now!")
+parser = argparse.ArgumentParser(description="[OLX] Find your car now!")
 parser.add_argument(
     "-r",
     action="store",
@@ -756,6 +834,15 @@ if proxy_enabled:
     ssl_verify = False
     urllib3.disable_warnings()
     logger.debug(f"SSL verification is disabled")
+
+logger.debug("ARGS - SCORE")
+car_score_year = os.getenv("SCORE_YEAR", "")
+car_score_color = os.getenv("SCORE_COLOR", "")
+car_score_door = int(os.getenv("SCORE_DOOR", 0))
+car_score_fuel = os.getenv("SCORE_FUEL", "")
+car_score_transmission = os.getenv("SCORE_TRANSMISSION", "")
+car_score_price = int(os.getenv("SCORE_PRICE", 0))
+car_score_keyword = os.getenv("SCORE_KEYWORD", "")
 
 
 """ Init """
@@ -878,5 +965,5 @@ if not args.q:
 logger.info("Display car status")
 
 """ Exit """
-logger.info(f"O  P  A  L  A\n\n{bar}\n--- Exiting  ---\n{bar}\n")
+logger.info(f"O L X\n\n{bar}\n--- Exiting  ---\n{bar}\n")
 sys.exit(0)
