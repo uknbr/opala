@@ -2,15 +2,15 @@ FROM python:3.7.0-alpine3.7
 
 MAINTAINER "pedro.pavan@linuxmail.org"
 LABEL github="https://github.com/uknbr"
-LABEL car="opala"
 LABEL platform="OLX"
+LABEL items="car"
 
 RUN apk add --no-cache --upgrade bash
-RUN addgroup -S car && adduser -S -G car -h /home/opala opala
-WORKDIR /home/opala/app
-COPY . /home/opala/app
-RUN chown -R opala:car /home/opala/
-USER opala
+RUN addgroup -S olx && adduser -S -G olx -h /home/car car
+WORKDIR /home/car/app
+COPY . /home/car/app
+RUN chown -R car:olx /home/car/
+USER car
 RUN pip3 install -r requirements.txt --no-cache-dir --user --no-warn-script-location
 
 CMD [ "bash","run.sh" ]
