@@ -14,7 +14,7 @@ run: ## Run Python script
 	python3 car.py -r $(CAR_REGION)
 
 build: ## Build the container
-    docker image build --force-rm --network host -t olx-$(APP_NAME):$(APP_VERSION) .
+	docker image build --force-rm --network host -t olx-$(APP_NAME):$(APP_VERSION) .
 
 up: ## Run container based on `config.env`
 	docker container run -dti --rm --env-file=./config.env --name=olx-$(APP_NAME) --network host olx-$(APP_NAME):$(APP_VERSION)
