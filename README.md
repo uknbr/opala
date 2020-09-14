@@ -48,7 +48,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 | SCORE_FUEL         | Preferred fuel         | Gasolina      |
 | SCORE_TRANSMISSION | Preferred transmission | Manual        |
 | SCORE_PRICE        | Maximum price          | 30000         |
-| SCORE_KEYWORD      | Words on description   | SS,6c         |
+| SCORE_KEYWORD      | Words on description   | SS,6cc        |
 
 ## Roadmap
 1. [ ] Support another Database (to be defined)

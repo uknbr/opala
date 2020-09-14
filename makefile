@@ -16,11 +16,13 @@ run: ## Run Python script
 build: ## Build the container
 	docker image build --force-rm --network host -t olx-$(APP_NAME):$(APP_VERSION) .
 
-up: ## Run container based on `config.env`
-	docker container run -dti --rm --env-file=./config.env --name=olx-$(APP_NAME) --network host olx-$(APP_NAME):$(APP_VERSION)
+start: ## Run container based on `config.env`
+	mkdir -p olx
+	chmod 777 olx/
+	docker container run -dti --rm --env-file=./config.env --name=olx-$(APP_NAME) --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx olx-$(APP_NAME):$(APP_VERSION)
 
 stop: ## Stop and remove a running container
-	docker container stop olx-$(APP_NAME) 2>/dev/null ; docker container rm -f olx-$(APP_NAME) 2>/dev/null ; docker info >/dev/null 2>&1
+	docker container rm -f olx-$(APP_NAME) 2>/dev/null || true
 
 status: ## Check status of container
 	docker container ls -f name=olx-$(APP_NAME)
@@ -31,7 +33,7 @@ sh: ## Access running container
 log: ## Follow the logs
 	docker logs -f olx-$(APP_NAME)
 
-restart: stop build up status ## Alias to stop, build, up and status
+restart: stop build start status ## Alias to stop, build, start and status
 
 version: ## Output the current version
 	@echo "olx-$(APP_NAME):$(APP_VERSION)"
