@@ -19,7 +19,7 @@ build: ## Build the container
 start: ## Run container based on `config.env`
 	mkdir -p olx
 	chmod 777 olx/
-	docker container run -dti --rm --env-file=./config.env --name=olx-$(APP_NAME) --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx olx-$(APP_NAME):$(APP_VERSION)
+	docker container run -dti --env-file=./config.env --name=olx-$(APP_NAME) --restart=unless-stopped --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx olx-$(APP_NAME):$(APP_VERSION)
 
 stop: ## Stop and remove a running container
 	docker container rm -f olx-$(APP_NAME) 2>/dev/null || true
