@@ -230,12 +230,12 @@ def score_by_keyword(name, desc):
             logger.debug(f"<+> SCORE (keyword - name) = {value} [{name}]")
         else:
             logger.debug(f"<=> SCORE (keyword - name) = {value} [{name}]")
-        
+
         if str.lower(value) in str.lower(desc):
             result += 1
             logger.debug(f"<+> SCORE (keyword - desc) = {value} [{desc}]")
         else:
-            logger.debug(f"<=> SCORE (keyword - desc) = {value} [{desc}]")            
+            logger.debug(f"<=> SCORE (keyword - desc) = {value} [{desc}]")
     return result
 
 
@@ -522,7 +522,7 @@ def get_car(car):
                     )
 
                     """ Telegram """
-                    telegram_message = f"Novo anúncio foi encontrado em {_state}!\nValor: {_price}\nAno: {_modelDate}\nPontos: {car_score}\n{car}"
+                    telegram_message = f"Novo anúncio ({car_model}) foi encontrado em {_state}!\nValor: {_price}\nAno: {_modelDate}\nPontos: {car_score}\n{car}"
                     if telegram_bot_send_text(telegram_message):
                         sql = table_notification.insert().values(
                             code=_code,
