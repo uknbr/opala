@@ -8,7 +8,8 @@ import urllib3
 from bs4 import BeautifulSoup
 from urlextract import URLExtract
 import json
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, select
+from sqlalchemy.sql import func
 import string
 import re
 import datetime
@@ -932,6 +933,9 @@ conn.execute(sql)
 logger.info("Saved table: status")
 
 """ MQTT """
+result = conn.execute(select([func.avg(table_offer.c.price)]))
+avg_price = round(result.fetchone()[0], 2)
+
 update_mqtt("found", cars_found)
 update_mqtt("total", cars_total)
 update_mqtt(
@@ -941,6 +945,7 @@ update_mqtt("location", car_location)
 update_mqtt("update", cars_update)
 update_mqtt("duration", time_elapsed)
 update_mqtt("rate", rate)
+update_mqtt("avg", avg_price)
 logger.info("Updated MQTT topics")
 
 """ Summary """
