@@ -241,13 +241,21 @@ def score_by_keyword(name, desc):
 
 
 def request_web(page, url):
-    if page == 1:
-        items = {"re": car_re, "rs": car_rs}
-    else:
-        items = {"re": car_re, "rs": car_rs, "o": page}
+    items = {
+        "re": car_re,
+        "rs": car_rs
+    }
+
+    if page > 1:
+        logger.debug(f"Request (page): {page}")
+        items["o"] = page
+
+    if car_query:
+        logger.debug(f"Request (query): {car_query}")
+        items["q"] = car_query
 
     try:
-        logger.debug(f"Accessing: {url}")
+        logger.debug(f"Request (url): {url}")
         response = requests.get(
             url,
             verify=ssl_verify,
@@ -793,26 +801,31 @@ car_location = str.join(",", car_location_list)
 car_region = str.lower(args.region[0])
 logger.debug(f"Location: {car_location}")
 
-car_brand = os.getenv("CAR_BRAND", "gm-chevrolet")
-car_model = os.getenv("CAR_MODEL", "opala")
-car_query = car_model
+try:
+    car_brand = os.getenv("CAR_BRAND")
+    car_model = os.getenv("CAR_MODEL")
+    car_query = os.getenv("CAR_TITLE", "")
 
-if args.year_begin is None:
-    car_date_s = int(os.getenv("CAR_DATE_BEGIN", 1960))
-    logger.debug(f"ENV - Year (begin): {car_date_s}")
-else:
-    car_date_s = args.year_begin[0]
-    logger.debug(f"ARG - Year (begin): {car_date_s}")
+    if args.year_begin is None:
+        car_date_s = int(os.getenv("CAR_DATE_BEGIN"))
+        logger.debug(f"ENV - Year (begin): {car_date_s}")
+    else:
+        car_date_s = args.year_begin[0]
+        logger.debug(f"ARG - Year (begin): {car_date_s}")
 
-if args.year_end is None:
-    car_date_e = int(os.getenv("CAR_DATE_END", 1992))
-    logger.debug(f"ENV - Year (end): {car_date_e}")
-else:
-    car_date_e = args.year_end[0]
-    logger.debug(f"ARG - Year (end): {car_date_e}")
+    if args.year_end is None:
+        car_date_e = int(os.getenv("CAR_DATE_END"))
+        logger.debug(f"ENV - Year (end): {car_date_e}")
+    else:
+        car_date_e = args.year_end[0]
+        logger.debug(f"ARG - Year (end): {car_date_e}")
 
-car_rs = get_year(car_date_s)
-car_re = get_year(car_date_e)
+    car_rs = get_year(car_date_s)
+    car_re = get_year(car_date_e)
+
+except Exception as e:
+    logger.error(f"Variable is not defined:\n{e}")
+    raise SystemExit("Variable is not defined! Exiting...")
 
 mqtt_enable = eval(os.getenv("MQTT_ENABLE", "False"))
 mqtt_host = os.getenv("MQTT_HOST")
