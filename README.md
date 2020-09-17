@@ -51,7 +51,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 | SCORE_KEYWORD      | Words on description   | SS,6cc        |
 
 ## Roadmap
-1. [ ] Support another Database (to be defined)
+1. [ ] Support another Database (MySQL)
 2. [ ] Support K8s
 3. [x] Support multiple cars and brands
 4. [ ] Dashboard and Statistics
