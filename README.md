@@ -30,6 +30,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 | DATA_MOUNT_PATH    | Data path              | /data         |
 | CAR_BRAND          | Brand                  | gm-chevrolet  |
 | CAR_MODEL          | Model                  | opala         |
+| CAR_TITLE          | Offer title            | opala         |
 | CAR_DATE_BEGIN     | Year range (begin)     | 1975          |
 | CAR_DATE_END       | Year range (end)       | 1980          |
 | CAR_REGION         | Target state           | sp,mg,rj      |
