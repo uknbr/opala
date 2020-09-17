@@ -16,8 +16,10 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 - MQTT integration - dashboard with statistics
 
 ## Demo
-![alt text](demo/loading.png "Loading")\
-![alt text](demo/result.png "Result")
+![alt text](demo/loading.png "Loading data")\
+![alt text](demo/result.png "Execution")\
+![alt text](demo/telegram.jpeg "Telegram notification")\
+![alt text](demo/mqtt.jpeg "MQTT dashboard")
 
 ## Configuration
 | VARIABLE           | DESCRIPTION            | EXAMPLE       |
