@@ -598,6 +598,7 @@ def get_car(car):
                                 _fuelType,
                                 _carColor,
                                 _numberOfDoors,
+                                _mileage,
                                 "-",
                                 f"{color.YELLOW}Update{color.END}",
                             ]
