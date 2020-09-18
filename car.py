@@ -40,6 +40,24 @@ class color:
 
 
 """ Functions """
+def get_km(value):
+    options = []
+    options.append(5)                   # 5.000
+    for num in range(10, 50, 10):       # 10.000 - 40.000
+        options.append(num)
+    for num in range(60, 220, 20):      # 60.000 - 200.000
+        options.append(num)
+    options.append(250)                 # 250.000
+    for num in range(300, 600, 100):    # 300.000 - 500.000
+        options.append(num)
+
+    if int(value/1000) in options:
+        return True
+    else:
+        logger.error(f"Invalid KM: {value}")
+        for key in options:
+            print(f"{key}.000", end=" | ")
+        raise SystemExit(f"\nKM '{value}' is not valid!")
 
 
 def get_region(value):
@@ -81,7 +99,7 @@ def get_region(value):
         logger.error(f"Invalid region: {value}")
         for key in options.keys():
             print(key, end=" | ")
-        raise SystemExit(f"\nRegion '{value}' is not a valid!")
+        raise SystemExit(f"\nRegion '{value}' is not valid!")
 
 
 def get_year(value):
@@ -134,7 +152,7 @@ def get_year(value):
         logger.error(f"Invalid year: {value}")
         for key in options.keys():
             print(key, end=" | ")
-        raise SystemExit(f"\nYear '{value}' is not a valid!")
+        raise SystemExit(f"\nYear '{value}' is not valid!")
 
 
 def telegram_bot_send_text(message):
@@ -240,6 +258,17 @@ def score_by_keyword(name, desc):
     return result
 
 
+def score_by_km(km):
+    result = 0
+    if int(km) <= int(car_score_km):
+        if int(km) > 1:
+            result += 1
+            logger.debug(f"<+> SCORE (km) = {km} [{car_score_km}]")
+        else:
+            logger.debug(f"<=> SCORE (km) = {km} [{car_score_km}]")
+    return result
+
+
 def request_web(page, url):
     items = {
         "re": car_re,
@@ -253,6 +282,10 @@ def request_web(page, url):
     if car_query:
         logger.debug(f"Request (query): {car_query}")
         items["q"] = car_query
+
+    if car_km_check:
+        logger.debug(f"Request (km): {car_km}")
+        items["me"] = car_km
 
     try:
         logger.debug(f"Request (url): {url}")
@@ -390,6 +423,7 @@ def get_car(car):
                 _modelDate = offer["makesOffer"]["itemOffered"]["modelDate"]
                 _fuelType = offer["makesOffer"]["itemOffered"].get("fuelType", "N/A")
                 _bodyType = offer["makesOffer"]["itemOffered"].get("bodyType", "N/A")
+                _mileage = offer["makesOffer"]["itemOffered"].get("mileageFromOdometer", 0)
                 _state = details["page"]["adDetail"]["state"]
                 _carColor = details["page"]["adDetail"].get("carcolor", "N/A")
                 _endTag = details["page"]["adDetail"].get("end_tag", -1)
@@ -440,9 +474,7 @@ def get_car(car):
                         modelDate=_modelDate,
                         vehicleTransmission=_vehicleTransmission,
                         fuelType=_fuelType,
-                        mileageFromOdometer=offer["makesOffer"]["itemOffered"][
-                            "mileageFromOdometer"
-                        ],
+                        mileageFromOdometer=_mileage,
                         bodyType=_bodyType,
                         ddd=details["page"]["adDetail"]["ddd"],
                         state=_state,
@@ -499,6 +531,7 @@ def get_car(car):
                     car_score = car_score + score_by_fuel(_fuelType)
                     car_score = car_score + score_by_tranmission(_vehicleTransmission)
                     car_score = car_score + score_by_price(_price)
+                    car_score = car_score + score_by_km(_mileage)
                     car_score = car_score + score_by_keyword(
                         offer["makesOffer"]["itemOffered"]["name"],
                         offer["makesOffer"]["itemOffered"]["description"],
@@ -525,6 +558,7 @@ def get_car(car):
                             _fuelType,
                             _carColor,
                             _numberOfDoors,
+                            _mileage,
                             car_score,
                             f"{color.GREEN}New{color.END}",
                         ]
@@ -773,6 +807,8 @@ table_offer = db_create_table_offer()
 
 """ Parameters """
 logger.info("Reading parameters")
+app_version = os.getenv("APP_VERSION", "?")
+
 parser = argparse.ArgumentParser(description="[OLX] Find your car now!")
 parser.add_argument(
     "-r",
@@ -790,7 +826,7 @@ parser.add_argument(
     "-e", action="store", dest="year_end", help="Until year (end)", type=int, nargs=1
 )
 parser.add_argument("-q", action="store_true", help="Quite mode, without output")
-parser.add_argument("--version", action="version", version="%(prog)s 0.2")
+parser.add_argument("--version", action="version", version=f"%(prog)s {app_version}")
 args = parser.parse_args()
 
 car_location_list = []
@@ -804,7 +840,13 @@ logger.debug(f"Location: {car_location}")
 try:
     car_brand = os.getenv("CAR_BRAND")
     car_model = os.getenv("CAR_MODEL")
+
     car_query = os.getenv("CAR_TITLE", "")
+    car_km = int(os.getenv("CAR_KM", 0))
+    if car_km > 0 and get_km(car_km):
+        car_km_check = True
+    else:
+        car_km_check = False
 
     if args.year_begin is None:
         car_date_s = int(os.getenv("CAR_DATE_BEGIN"))
@@ -857,6 +899,7 @@ car_score_fuel = os.getenv("SCORE_FUEL", "")
 car_score_transmission = os.getenv("SCORE_TRANSMISSION", "")
 car_score_price = int(os.getenv("SCORE_PRICE", 0))
 car_score_keyword = os.getenv("SCORE_KEYWORD", "")
+car_score_km = os.getenv("SCORE_KM", 0)
 
 
 """ Init """
@@ -878,6 +921,7 @@ car_offer = PrettyTable(
         f"{color.PURPLE}FUEL{color.END}",
         f"{color.PURPLE}COLOR{color.END}",
         f"{color.PURPLE}DOORS{color.END}",
+        f"{color.PURPLE}KM{color.END}",
         f"{color.PURPLE}SCORE{color.END}",
         f"{color.PURPLE}STATUS{color.END}",
     ]

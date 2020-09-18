@@ -14,26 +14,26 @@ run: ## Run Python script
 	python3 car.py -r $(CAR_REGION)
 
 build: ## Build the container
-	docker image build --force-rm --network host -t olx-$(APP_NAME):$(APP_VERSION) .
+	docker image build --force-rm --network host -t $(APP_IMAGE):$(APP_VERSION) .
 
 start: ## Run container based on `config.env`
 	mkdir -p olx
 	chmod 777 olx/
-	docker container run -dti --env-file=./config.env --name=olx-$(APP_NAME) --restart=unless-stopped --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx olx-$(APP_NAME):$(APP_VERSION)
+	docker container run -dti --env-file=./$(cnf) --name=$(CAR_MODEL) --restart=unless-stopped --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx $(APP_IMAGE):$(APP_VERSION)
 
 stop: ## Stop and remove a running container
-	docker container rm -f olx-$(APP_NAME) 2>/dev/null || true
+	docker container rm -f $(CAR_MODEL) 2>/dev/null || true
 
 status: ## Check status of container
-	docker container ls -f name=olx-$(APP_NAME)
+	docker container ls -f name=$(CAR_MODEL)
 
 sh: ## Access running container
-	docker exec -ti olx-$(APP_NAME) sh
+	docker exec -ti $(CAR_MODEL) sh
 
 log: ## Follow the logs
-	docker logs -f olx-$(APP_NAME)
+	docker logs -f $(CAR_MODEL)
 
 restart: stop build start status ## Alias to stop, build, start and status
 
 version: ## Output the current version
-	@echo "olx-$(APP_NAME):$(APP_VERSION)"
+	@echo "$(APP_IMAGE):$(APP_VERSION)"
