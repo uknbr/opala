@@ -59,11 +59,11 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 | SCORE_KM           | Maximum odometer       | 80000         |
 
 ## Roadmap
-[ ] Support another Database (MySQL)
-[ ] Support K8s
-[x] Support multiple cars and brands
-[ ] Dashboard and Statistics
-[x] Configure parameters related to score
-[ ] Detect good opportunities
-[ ] Duplicated offer
-[ ] Alerts based on parameters
+- [ ] Support another Database (MySQL)
+- [ ] Support K8s
+- [x] Support multiple cars and brands
+- [ ] Dashboard and Statistics
+- [x] Configure parameters related to score
+- [ ] Detect good opportunities
+- [ ] Duplicated offer
+- [ ] Alerts based on parameters
