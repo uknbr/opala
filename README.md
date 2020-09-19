@@ -17,9 +17,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 
 ## Demo
 ![alt text](demo/loading.png "Loading data")\
-![alt text](demo/result.png "Execution")\
-![alt text](demo/telegram.jpeg "Telegram notification")\
-![alt text](demo/mqtt.jpeg "MQTT dashboard")
+![alt text](demo/result.png "Execution")
 
 ## Configuration
 - Starting with **CAR_** is used as **filter**
@@ -57,6 +55,27 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 | SCORE_PRICE        | Maximum price          | 30000         |
 | SCORE_KEYWORD      | Words on description   | SS,6cc        |
 | SCORE_KM           | Maximum odometer       | 80000         |
+| MYSQL_SYNC         | Enable MySQL sync      | True or False |
+| MYSQL_DATABASE     | DB name                | olx           |
+| MYSQL_HOST         | DB host                | localhost     |
+| MYSQL_PORT         | DB port                | 3306          |
+| MYSQL_USER         | DB user                | user          |
+| MYSQL_PASS         | DB password            | pass123       |
+
+### MQTT
+![alt text](demo/mqtt.jpeg "MQTT dashboard")\
+- Make sure we have MQTT server running
+- Adjust variables based on [Configuration](#Configuration)
+- Install/Configure MQTT client in our Smartphone
+
+### Telegram
+![alt text](demo/telegram.jpeg "Telegram notification")
+- Make sure we have your bot created using [@BotFather](https://telegram.me/BotFather)
+- Adjust variables based on [Configuration](#Configuration)
+
+### MySQL
+- Make sure we have MySQL server running
+- Adjust variables based on [Configuration](#Configuration)
 
 ## Roadmap
 - [x] Support another Database (MySQL)
