@@ -64,17 +64,22 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 
 ### MQTT
 ![alt text](demo/mqtt.jpeg "MQTT dashboard")\
-- Make sure we have MQTT server running
+- Make sure you have MQTT server running
 - Adjust variables based on [Configuration](#Configuration)
 - Install/Configure MQTT client in our Smartphone
 
 ### Telegram
 ![alt text](demo/telegram.jpeg "Telegram notification")
-- Make sure we have your bot created using [@BotFather](https://telegram.me/BotFather)
+- Make sure you have your bot created using [@BotFather](https://telegram.me/BotFather)
+
+```bash
+curl -s https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates | jq .result[].message.chat.id | tail -n 1
+```
+
 - Adjust variables based on [Configuration](#Configuration)
 
 ### MySQL
-- Make sure we have MySQL server running
+- Make sure you have MySQL server running
 - Adjust variables based on [Configuration](#Configuration)
 
 ## Roadmap
