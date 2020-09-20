@@ -14,6 +14,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 - Telegram alert - **New** offer
 - Telegram alert - **Update** price
 - MQTT integration - dashboard with statistics
+- Dashboard with offers and statistics
 
 ## Demo
 ![alt text](demo/loading.png "Loading data")\
@@ -102,7 +103,7 @@ curl -s https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates | jq .resul
 - Adjust variables based on [Configuration](#Configuration)
 
 ### MySQL
-- Make sure you have MySQL server running
+- Make sure you have MySQL server [running](#Dashboard)
 - Adjust variables based on [Configuration](#Configuration)
 
 ## Dashboard
