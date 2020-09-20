@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0.21
+    environment:
+      MYSQL_DATABASE: "olx"
+      MYSQL_USER: "car"
+      MYSQL_PASSWORD: "Olx@123"  
+    ports:
+      - 3306:3306
+    volumes:
+      - olx-data:/var/lib/mysql
+    networks:
+      - olx-network
+
+  adminer:
+    image: adminer:4.7.7
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+    ports:
+      - 8080:8080
+    networks:
+      - olx-network
+
+  grafana:
+    image: grafana/grafana:7.1.5
+    ports:
+      - 8090:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./files/datasource:/etc/grafana/provisioning/datasources
+      - ./files/dashboard:/etc/grafana/provisioning/dashboards
+    environment:
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_SECURITY_ADMIN_USER: "car"
+      GF_SECURITY_ADMIN_PASSWORD: "Olx@123"
+    networks:
+      - olx-network
+
+volumes:
+  olx-data:
+  grafana_data:
+
+networks: 
+  olx-network:
+    driver: bridge

@@ -1,0 +1,18 @@
+apiVersion: 1
+
+datasources:
+  - name: MySQL
+    type: mysql
+    url: mysql:3306
+    database: olx
+    user: car
+    org_id: 1
+    is_default: true
+    version: 1
+    editable: true    
+    secureJsonData:
+      password: "Olx@123"     
+    jsonData:
+      maxOpenConns: 0
+      maxIdleConns: 2
+      connMaxLifetime: 14400
