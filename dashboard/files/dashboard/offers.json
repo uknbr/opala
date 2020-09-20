@@ -572,7 +572,7 @@
                   {
                     "targetBlank": true,
                     "title": "OLX",
-                    "url": "${__data.fields[0]}"
+                    "url": "${__data.fields[1]}"
                   }
                 ]
               }
