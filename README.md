@@ -1,5 +1,5 @@
 # Opala
-Use this project to look for your **Opala**, it helped me a lot!\
+Use this project to look for your **Opala** or any other **car**.\
 It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 
 ## Features
@@ -18,6 +18,29 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 ## Demo
 ![alt text](demo/loading.png "Loading data")\
 ![alt text](demo/result.png "Execution")
+
+## Usage
+- Help
+
+```console
+opala:~$ make help
+```
+
+- Docker
+
+```console
+opala:~$ make build
+opala:~$ make start
+opala:~$ make status
+opala:~$ make log
+```
+
+- Script
+
+```console
+opala:~$ make run
+opala:~$ make sync
+```
 
 ## Configuration
 - Starting with **CAR_** is used as **filter**
@@ -59,11 +82,11 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 | MYSQL_DATABASE     | DB name                | olx           |
 | MYSQL_HOST         | DB host                | localhost     |
 | MYSQL_PORT         | DB port                | 3306          |
-| MYSQL_USER         | DB user                | user          |
-| MYSQL_PASS         | DB password            | pass123       |
+| MYSQL_USER         | DB user                | -             |
+| MYSQL_PASS         | DB password            | -             |
 
 ### MQTT
-![alt text](demo/mqtt.jpeg "MQTT dashboard")\
+![alt text](demo/mqtt.jpeg "MQTT dashboard")
 - Make sure you have MQTT server running
 - Adjust variables based on [Configuration](#Configuration)
 - Install/Configure MQTT client in our Smartphone
@@ -73,7 +96,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 - Make sure you have your bot created using [@BotFather](https://telegram.me/BotFather)
 
 ```bash
-curl -s https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates | jq .result[].message.chat.id | tail -n 1
+curl -s https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates | jq .result[].message.chat.id
 ```
 
 - Adjust variables based on [Configuration](#Configuration)
@@ -82,11 +105,26 @@ curl -s https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates | jq .resul
 - Make sure you have MySQL server running
 - Adjust variables based on [Configuration](#Configuration)
 
+## Dashboard
+
+Data Visualization using tools:
+- [MySQL](#MySQL)
+- Adminer
+- Grafana
+
+```bash
+cd dashboard
+docker-compose -f olx.yml up -d
+```
+
+![alt text](demo/dashboard_offer.jpeg "Offers")\
+![alt text](demo/dashboard_stat.jpeg "Statistics")
+
 ## Roadmap
 - [x] Support another Database (MySQL)
 - [ ] Support K8s using helm
 - [x] Support multiple cars and brands
-- [ ] Dashboard and Statistics
+- [x] Dashboard and Statistics
 - [x] Configure parameters related to score
 - [x] Detect good opportunities by score
 - [ ] Duplicated offer
