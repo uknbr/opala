@@ -282,6 +282,7 @@ def request_web(page, url):
     if car_query:
         logger.debug(f"Request (query): {car_query}")
         items["q"] = car_query
+        items["ot"] = 1
 
     if car_km_check:
         logger.debug(f"Request (km): {car_km}")
