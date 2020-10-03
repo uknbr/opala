@@ -5,7 +5,7 @@ LABEL github="https://github.com/uknbr"
 LABEL platform="OLX"
 LABEL items="car"
 
-RUN pip install --upgrade pip && pip3 install sqlite3-to-mysql
+RUN pip3 install --upgrade pip && pip3 install sqlite3-to-mysql
 
 RUN apk add --no-cache --upgrade bash
 RUN addgroup -S olx && adduser -S -G olx -h /home/car car
