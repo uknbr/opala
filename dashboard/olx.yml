@@ -6,7 +6,8 @@ services:
     environment:
       MYSQL_DATABASE: "olx"
       MYSQL_USER: "car"
-      MYSQL_PASSWORD: "Olx@123"  
+      MYSQL_PASSWORD: "Olx@123"
+      MYSQL_ROOT_PASSWORD: "Olx@123"
     ports:
       - 3306:3306
     volumes:
@@ -42,6 +43,6 @@ volumes:
   olx-data:
   grafana_data:
 
-networks: 
+networks:
   olx-network:
     driver: bridge

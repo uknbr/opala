@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1600560258216,
+  "iteration": 1601745897285,
   "links": [],
   "panels": [
     {
@@ -75,7 +74,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(1) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand = '$Brand';",
+          "rawSql": "SELECT COUNT(1) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
           "refId": "A",
           "select": [
             [
@@ -159,7 +158,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT AVG(mileageFromOdometer) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand = '$Brand';",
+          "rawSql": "SELECT AVG(mileageFromOdometer) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
           "refId": "A",
           "select": [
             [
@@ -243,7 +242,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT AVG(S.score)\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand = '$Brand';",
+          "rawSql": "SELECT AVG(S.score)\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand in ($Brand);",
           "refId": "A",
           "select": [
             [
@@ -327,7 +326,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT AVG(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand = '$Brand';",
+          "rawSql": "SELECT AVG(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
           "refId": "A",
           "select": [
             [
@@ -411,7 +410,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT MIN(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand = '$Brand';",
+          "rawSql": "SELECT MIN(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
           "refId": "A",
           "select": [
             [
@@ -495,7 +494,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT MAX(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand = '$Brand';",
+          "rawSql": "SELECT MAX(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
           "refId": "A",
           "select": [
             [
@@ -598,7 +597,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": null
               }
             ]
           },
@@ -798,7 +797,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  FROM_UNIXTIME(U.date, '%d/%m/%Y %H:%i') as 'DATE & TIME',\n  U.url as URL,\n  O.name as NAME,\n  O.modelDate as YEAR,\n  O.price as PRICE,\n  S.score as SCORE,\n  O.numberOfDoors as DOORS,\n  O.mileageFromOdometer as ODOMETER,\n  O.vehicleTransmission as TRANSMISSION,\n  O.fuelType as FUEL,\n  O.carColor as COLOR\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nINNER JOIN url U ON O.code = U.code\nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand = '$Brand'\nAND \n  FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND\n  FROM_UNIXTIME(U.date) <= $__timeTo()\nORDER BY\n  U.date DESC;",
+          "rawSql": "SELECT\n  FROM_UNIXTIME(U.date, '%d/%m/%Y %H:%i') as 'DATE & TIME',\n  U.url as URL,\n  O.name as NAME,\n  O.modelDate as YEAR,\n  O.price as PRICE,\n  S.score as SCORE,\n  O.numberOfDoors as DOORS,\n  O.mileageFromOdometer as ODOMETER,\n  O.vehicleTransmission as TRANSMISSION,\n  O.fuelType as FUEL,\n  O.carColor as COLOR\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nINNER JOIN url U ON O.code = U.code\nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand in ($Brand)\nAND \n  FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND\n  FROM_UNIXTIME(U.date) <= $__timeTo()\nORDER BY\n  U.date DESC;",
           "refId": "A",
           "select": [
             [
@@ -852,12 +851,8 @@
         "current": {
           "selected": true,
           "tags": [],
-          "text": [
-            "SP"
-          ],
-          "value": [
-            "SP"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct state from offer;",
@@ -882,25 +877,20 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "GM - CHEVROLET",
-          "value": "GM - CHEVROLET"
+          "tags": [],
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct brand from offer;",
         "hide": 0,
         "includeAll": false,
         "label": null,
-        "multi": false,
+        "multi": true,
         "name": "Brand",
-        "options": [
-          {
-            "selected": true,
-            "text": "GM - CHEVROLET",
-            "value": "GM - CHEVROLET"
-          }
-        ],
+        "options": [],
         "query": "select distinct brand from offer;",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -914,32 +904,9 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": [
-            "Amarelo",
-            "Azul",
-            "Branco",
-            "Cinza",
-            "Laranja",
-            "N/A",
-            "Outra",
-            "Prata",
-            "Preto",
-            "Verde",
-            "Vermelho"
-          ],
-          "value": [
-            "Amarelo",
-            "Azul",
-            "Branco",
-            "Cinza",
-            "Laranja",
-            "N/A",
-            "Outra",
-            "Prata",
-            "Preto",
-            "Verde",
-            "Vermelho"
-          ]
+          "tags": [],
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct carColor from offer;",
@@ -963,7 +930,7 @@
     ]
   },
   "time": {
-    "from": "now-3d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -977,5 +944,5 @@
   "timezone": "browser",
   "title": "Offers",
   "uid": "mVLx1-OMk",
-  "version": 17
+  "version": 18
 }
