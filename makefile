@@ -38,5 +38,9 @@ restart: stop build start status ## Alias to stop, build, start and status
 sync: ## Sync data to MySQL
 	sqlite3mysql -f olx/db/car.db -d $(MYSQL_DATABASE) -h $(MYSQL_HOST) -P $(MYSQL_PORT) -u $(MYSQL_USER) -p $(MYSQL_PASS)
 
+dashboard: ## Start dashboard
+	cd dashboard
+	docker-compose -f olx.yml up -d
+
 version: ## Output the current version
 	@echo "$(APP_IMAGE):$(APP_VERSION)"
