@@ -128,5 +128,4 @@ docker-compose -f olx.yml up -d
 - [x] Dashboard and Statistics
 - [x] Configure parameters related to score
 - [x] Detect good opportunities by score
-- [ ] Duplicated offer
 - [ ] Alerts based on parameters
