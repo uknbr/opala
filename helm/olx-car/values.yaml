@@ -1,0 +1,50 @@
+# Default values for olx.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+reload: true
+security:
+  user: olx
+  token: false
+image:
+  repository: uknbr/olx-car
+  pullPolicy: Always
+  tag: latest
+configmap:
+  daemon_interval: 10
+  daemon_log: DEBUG
+  data_mount_path: /data
+  car_brand: gm-chevrolet
+  car_model: opala
+  car_title: opala
+  car_date_begin: 1975
+  car_date_end: 1980
+  car_km: 90000
+  car_region: sp,mg
+  mqtt_enable: False
+  mqtt_host: localhost
+  mqtt_port: 1883
+  telegram_enable: False
+  telegram_bot_token: NA
+  telegram_chat_id: NA
+  score_year: 1979
+  score_color: Preto
+  score_door: 2
+  score_fuel: Gasolina
+  score_transmission: Manual
+  score_price: 30000
+  score_keyword: SS,6cc
+  score_km: 80000
+  mysql_sync: False
+  mysql_database: olx
+  mysql_host: localhost
+  mysql_port: 3306
+  mysql_user: NA
+  mysql_pass: NA
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi

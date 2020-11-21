@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "{{ .Values.reload }}"
+  name: {{ include "olx-car.fullname" . }}
+  labels:
+    {{- include "olx-car.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "olx-car.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "olx-car.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsUser: 100
+        runAsGroup: 101
+      serviceAccountName: {{ .Values.security.user }}
+      automountServiceAccountToken: {{ .Values.security.token }}
+      containers:
+        - name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}"
+          env:
+            - name: INIT_DATE
+              valueFrom:
+                configMapKeyRef:
+                  key: date
+                  name: "{{ .Chart.Name }}-config"
+            - name: CUSTOM_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: message
+                  name: "{{ .Chart.Name }}-config"
+            - name: VERSION
+              value: {{ .Chart.Version }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "running below scripts"
+              i=0; 
+              while true; 
+              do 
+                echo "$i: $(date)"; 
+                i=$((i+1)); 
+                sleep 1; 
+              done
+          livenessProbe:
+            exec:
+              command:
+                - pgrep
+                - -f
+                - run.sh
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - pgrep
+                - -f
+                - run.sh
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: "{{ .Chart.Name }}-share"
+              mountPath: "{{ .Values.configmap.data_mount_path }}"
+      volumes:
+        - name: "{{ .Chart.Name }}-share"
+          persistentVolumeClaim:
+            claimName: "{{ .Chart.Name }}-volume"
