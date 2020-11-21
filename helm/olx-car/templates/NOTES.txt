@@ -1,0 +1,10 @@
+----------------
+ O L X   C A R
+
+Purpose:
+  Find your car now!
+  Looking for {{ .Values.configmap.car_model }}
+  Target region is {{ .Values.configmap.car_region }}
+  MQTT enabled = {{ .Values.configmap.mqtt_enable }}
+  Telegram enabled = {{ .Values.configmap.telegram_enable }}
+  MySQL sync = {{ .Values.configmap.mysql_sync }}
