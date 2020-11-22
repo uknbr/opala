@@ -1,10 +1,25 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "{{ .Chart.Name }}-data"
+  labels:
+    type: local
+spec:
+  storageClassName: "{{ .Values.volume.storage_class }}"
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "{{ .Values.volume.path }}"
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: "{{ .Chart.Name }}-volume"
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   resources:
     requests:
-      storage: 500Mi
+      storage: 1Gi
