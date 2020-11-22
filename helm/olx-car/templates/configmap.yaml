@@ -3,34 +3,34 @@ kind: ConfigMap
 metadata:
   name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
 data:
-  daemon_interval: {{ .Values.configmap.daemon_interval }}
+  daemon_interval: "{{ .Values.configmap.daemon_interval }}"
   daemon_log: {{ .Values.configmap.daemon_log }}
-  data_mount_enable: True
+  data_mount_enable: "True"
   data_mount_path: {{ .Values.configmap.data_mount_path }}
   car_brand: {{ .Values.configmap.car_brand }}
   car_model: {{ .Values.configmap.car_model }}
   car_title: {{ .Values.configmap.car_title }}
-  car_date_begin: {{ .Values.configmap.car_date_begin }}
-  car_date_end: {{ .Values.configmap.car_date_end }}
-  car_km: {{ .Values.configmap.car_km }}
+  car_date_begin: "{{ .Values.configmap.car_date_begin }}"
+  car_date_end: "{{ .Values.configmap.car_date_end }}"
+  car_km: "{{ .Values.configmap.car_km }}"
   car_region: {{ .Values.configmap.car_region }}
-  mqtt_enable: {{ .Values.configmap.mqtt_enable }}
+  mqtt_enable: "{{ .Values.configmap.mqtt_enable }}"
   mqtt_host: {{ .Values.configmap.mqtt_host }}
-  mqtt_port: {{ .Values.configmap.mqtt_port }}
-  telegram_enable: {{ .Values.configmap.telegram_enable }}
+  mqtt_port: "{{ .Values.configmap.mqtt_port }}"
+  telegram_enable: "{{ .Values.configmap.telegram_enable }}"
   telegram_bot_token: {{ .Values.configmap.telegram_bot_token }}
   telegram_chat_id: {{ .Values.configmap.telegram_chat_id }}
-  score_year: {{ .Values.configmap.score_year }}
+  score_year: "{{ .Values.configmap.score_year }}"
   score_color: {{ .Values.configmap.score_color }}
-  score_door: {{ .Values.configmap.score_door }}
+  score_door: "{{ .Values.configmap.score_door }}"
   score_fuel: {{ .Values.configmap.score_fuel }}
   score_transmission: {{ .Values.configmap.score_transmission }}
-  score_price: {{ .Values.configmap.score_price }}
+  score_price: "{{ .Values.configmap.score_price }}"
   score_keyword: {{ .Values.configmap.score_keyword }}
-  score_km: {{ .Values.configmap.score_km }}
-  mysql_sync: {{ .Values.configmap.mysql_sync }}
+  score_km: "{{ .Values.configmap.score_km }}"
+  mysql_sync: "{{ .Values.configmap.mysql_sync }}"
   mysql_database: {{ .Values.configmap.mysql_database }}
   mysql_host: {{ .Values.configmap.mysql_host }}
-  mysql_port: {{ .Values.configmap.mysql_port }}
+  mysql_port: "{{ .Values.configmap.mysql_port }}"
   mysql_user: {{ .Values.configmap.mysql_user }}
   mysql_pass: {{ .Values.configmap.mysql_pass }}
