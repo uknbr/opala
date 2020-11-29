@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1601745897285,
+  "iteration": 1606612685263,
   "links": [],
   "panels": [
     {
@@ -563,7 +563,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 155
+                "value": 372
               },
               {
                 "id": "links",
@@ -585,7 +585,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 185
+                "value": 478
               }
             ]
           },
@@ -597,7 +597,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": null
+                "value": 114
               }
             ]
           },
@@ -775,7 +775,7 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 19,
         "w": 23,
         "x": 0,
         "y": 3
@@ -786,7 +786,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "DATE & TIME"
+            "displayName": "SCORE"
           }
         ]
       },
@@ -797,7 +797,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  FROM_UNIXTIME(U.date, '%d/%m/%Y %H:%i') as 'DATE & TIME',\n  U.url as URL,\n  O.name as NAME,\n  O.modelDate as YEAR,\n  O.price as PRICE,\n  S.score as SCORE,\n  O.numberOfDoors as DOORS,\n  O.mileageFromOdometer as ODOMETER,\n  O.vehicleTransmission as TRANSMISSION,\n  O.fuelType as FUEL,\n  O.carColor as COLOR\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nINNER JOIN url U ON O.code = U.code\nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand in ($Brand)\nAND \n  FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND\n  FROM_UNIXTIME(U.date) <= $__timeTo()\nORDER BY\n  U.date DESC;",
+          "rawSql": "SELECT\n  FROM_UNIXTIME(U.date, '%d/%m/%Y %H:%i') as 'DATE & TIME',\n  U.url as URL,\n  O.name as NAME,\n  O.modelDate as YEAR,\n  O.price as PRICE,\n  S.score as SCORE,\n  O.numberOfDoors as DOORS,\n  O.mileageFromOdometer as ODOMETER,\n  O.vehicleTransmission as TRANSMISSION,\n  O.fuelType as FUEL,\n  O.carColor as COLOR\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nINNER JOIN url U ON O.code = U.code\nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand in ($Brand)\nAND\n  O.model in ($Model)\nAND\n  FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND\n  FROM_UNIXTIME(U.date) <= $__timeTo()\nORDER BY\n  U.date DESC;",
           "refId": "A",
           "select": [
             [
@@ -850,9 +850,12 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
-          "text": [],
-          "value": []
+          "text": [
+            "SP"
+          ],
+          "value": [
+            "SP"
+          ]
         },
         "datasource": "MySQL",
         "definition": "select distinct state from offer;",
@@ -877,9 +880,12 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
-          "text": [],
-          "value": []
+          "text": [
+            "GM - CHEVROLET"
+          ],
+          "value": [
+            "GM - CHEVROLET"
+          ]
         },
         "datasource": "MySQL",
         "definition": "select distinct brand from offer;",
@@ -904,14 +910,52 @@
         "allValue": null,
         "current": {
           "selected": true,
+          "text": [
+            "GM - CHEVROLET ASTRA ELEGANCE 2.0 MPFI FLEXPOWER 8V 3P",
+            "GM - CHEVROLET ASTRA COMFORT 2.0 MPFI FLEXPOWER 8V 3P",
+            "GM - CHEVROLET ASTRA ADVANTAGE 2.0 MPFI FLEXPOWER 8V 3P"
+          ],
+          "value": [
+            "GM - CHEVROLET ASTRA ELEGANCE 2.0 MPFI FLEXPOWER 8V 3P",
+            "GM - CHEVROLET ASTRA COMFORT 2.0 MPFI FLEXPOWER 8V 3P",
+            "GM - CHEVROLET ASTRA ADVANTAGE 2.0 MPFI FLEXPOWER 8V 3P"
+          ]
+        },
+        "datasource": "MySQL",
+        "definition": "select distinct model from offer;",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "Model",
+        "options": [],
+        "query": "select distinct model from offer;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 6,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
           "tags": [],
-          "text": [],
-          "value": []
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "MySQL",
         "definition": "select distinct carColor from offer;",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": null,
         "multi": true,
         "name": "Color",
@@ -944,5 +988,5 @@
   "timezone": "browser",
   "title": "Offers",
   "uid": "mVLx1-OMk",
-  "version": 18
+  "version": 19
 }
