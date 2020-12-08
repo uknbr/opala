@@ -396,8 +396,14 @@ def get_car(car):
         response.encoding = "utf-8"
         soup = BeautifulSoup(response.content, "html.parser")
 
-        car_info = soup.find("script", type="application/ld+json")
-        offer = json.loads(str(car_info.contents[0]))
+        try:
+            car_info = soup.find("script", type="application/ld+json")
+            json_string = str(car_info.contents[0])
+            offer = json.loads(json_string)
+        except Exception as e:
+            logger.error(f"Failed to load JSON: {e}")
+            logger.error(json_string)
+            return -1
 
         with open(f"{base_path}olx/tmp/offer.json", "w") as outfile:
             json.dump(offer, outfile)
@@ -405,7 +411,15 @@ def get_car(car):
 
         for ad in soup.find_all("script"):
             if "pageType" in str(ad):
-                details = json.loads(str(ad).split("[", 1)[1].split("]")[0])
+                try:
+                    #details = json.loads(str(ad).split("[", 1)[1].split("]")[0])
+                    ad_string = str(ad)
+                    json_string = ad_string[ad_string.find("[")+len("["):ad_string.rfind("]")]
+                    details = json.loads(json_string)
+                except Exception as e:
+                    logger.error(f"Failed to load JSON: {e}")
+                    logger.error(ad_string)
+                    return -1
 
                 with open(f"{base_path}olx/tmp/details.json", "w") as outfile:
                     json.dump(details, outfile)
@@ -709,6 +723,7 @@ def db_create_table_status():
         Column("rate", Float(2)),
         Column("found", Integer),
         Column("update", Integer),
+        Column("error", Integer),
         Column("total", Integer),
         Column("region", String(2)),
         Column("date", Integer),
@@ -939,13 +954,17 @@ if cars_total == 0:
 cars_found = 0
 cars_update = 0
 cars_exists = 0
+cars_error = 0
 cars_count = 0
 
 for url in cars:
     result = get_car(url)
     cars_count += 1
 
-    if result == 0:
+    if result == -1:
+        cars_error += 1
+        car_result = f"{color.RED}={color.END}"
+    elif result == 0:
         cars_exists += 1
         car_result = f"{color.CYAN}={color.END}"
     elif result == 1:
@@ -984,6 +1003,7 @@ sql = table_status.insert().values(
     rate=rate,
     found=cars_found,
     update=cars_update,
+    error=cars_error,
     total=cars_total,
     region=car_location,
     date=get_datetime_epoch(),
@@ -1021,6 +1041,9 @@ car_status.add_row(
 )
 car_status.add_row(
     [f"{color.YELLOW}Update{color.END}", f"{color.YELLOW}{cars_update}{color.END}"]
+)
+car_status.add_row(
+    [f"{color.RED}Error{color.END}", f"{color.RED}{cars_error}{color.END}"]
 )
 car_status.add_row(["Rate", rate])
 car_status.add_row(["Total", cars_total])
