@@ -1,3 +1,5 @@
+[![Build latest](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
+
 # Opala
 Use this project to look for your **Opala** or any other **car**.\
 It will use [OLX](https://www.olx.com.br) platform according to your parameters.
