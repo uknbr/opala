@@ -1,4 +1,4 @@
-[![Build latest](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
+[![Build and Push](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg?branch=master)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
 
 # Opala
 Use this project to look for your **Opala** or any other **car**.\
