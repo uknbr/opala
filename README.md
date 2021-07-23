@@ -1,4 +1,14 @@
+![Lines of code](https://img.shields.io/tokei/lines/github/uknbr/opala)
+![GitHub issues](https://img.shields.io/github/issues-raw/uknbr/opala)
+![GitHub Repo stars](https://img.shields.io/github/stars/uknbr/opala)
+![GitHub last commit](https://img.shields.io/github/last-commit/uknbr/opala)
+![Docker Pulls](https://img.shields.io/docker/pulls/uknbr/olx-car)
+![Docker Stars](https://img.shields.io/docker/stars/uknbr/olx-car)
+![Docker Image Name](https://img.shields.io/badge/image%20name-uknbr%2Folx--car-blue)
+![Docker Image Version](https://img.shields.io/docker/v/uknbr/olx-car?sort=date)
+![Docker Image Size](https://img.shields.io/docker/image-size/uknbr/olx-car?sort=date)
 [![Build and Push](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg?branch=master)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
+
 
 # Opala
 Use this project to look for your **Opala** or any other **car**.\
