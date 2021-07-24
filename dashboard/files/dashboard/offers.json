@@ -850,12 +850,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": [
-            "SP"
-          ],
-          "value": [
-            "SP"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct state from offer;",
@@ -880,12 +876,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": [
-            "GM - CHEVROLET"
-          ],
-          "value": [
-            "GM - CHEVROLET"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct brand from offer;",
@@ -910,16 +902,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": [
-            "GM - CHEVROLET ASTRA ELEGANCE 2.0 MPFI FLEXPOWER 8V 3P",
-            "GM - CHEVROLET ASTRA COMFORT 2.0 MPFI FLEXPOWER 8V 3P",
-            "GM - CHEVROLET ASTRA ADVANTAGE 2.0 MPFI FLEXPOWER 8V 3P"
-          ],
-          "value": [
-            "GM - CHEVROLET ASTRA ELEGANCE 2.0 MPFI FLEXPOWER 8V 3P",
-            "GM - CHEVROLET ASTRA COMFORT 2.0 MPFI FLEXPOWER 8V 3P",
-            "GM - CHEVROLET ASTRA ADVANTAGE 2.0 MPFI FLEXPOWER 8V 3P"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct model from offer;",
@@ -945,12 +929,8 @@
         "current": {
           "selected": true,
           "tags": [],
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": "MySQL",
         "definition": "select distinct carColor from offer;",
