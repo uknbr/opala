@@ -860,9 +860,18 @@ try:
     car_model = os.getenv("CAR_MODEL")
 
     car_query = os.getenv("CAR_TITLE", "")
+    
+    car_price = int(os.getenv("CAR_PRICE", 0))
+    if car_price > 0:
+        car_price_check = True
+        logger.debug(f"ENV - Price: filter enabled ({car_price})")
+    else:
+        car_price_check = False
+
     car_km = int(os.getenv("CAR_KM", 0))
     if car_km > 0 and get_km(car_km):
         car_km_check = True
+        logger.debug(f"ENV - KM: filter enabled ({car_km})")
     else:
         car_km_check = False
 
