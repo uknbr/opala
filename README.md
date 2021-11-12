@@ -64,8 +64,9 @@ opala:~$ make sync
 
 | VARIABLE           | DESCRIPTION            | EXAMPLE       |
 | ------------------ |:----------------------:| -------------:|
-| APP_IMAGE          | Container image        | opala         |
-| APP_VERSION        | Container version      | -             |
+| APP_IMAGE          | Container image        | uknbr/olx_car |
+| APP_VERSION        | Container version      | latest        |
+| APP_ID             | Container name         | opala         |
 | DAEMON_INTERVAL    | Loop interval          | 10            |
 | DAEMON_LOG         | Log level              | DEBUG         |
 | DATA_MOUNT_ENABLE  | Enable data            | True or False |
