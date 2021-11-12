@@ -19,19 +19,19 @@ build: ## Build the container
 start: ## Run container based on `config.env`
 	mkdir -p olx
 	chmod 777 olx/
-	docker container run -dti --env-file=./$(cnf) --name=$(CAR_MODEL) --label app=olx --restart=always --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx $(APP_IMAGE):$(APP_VERSION)
+	docker container run -dti --env-file=./$(cnf) --name=$(APP_ID) --label id=$(APP_ID) --label app=olx --restart=always --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx $(APP_IMAGE):$(APP_VERSION)
 
 stop: ## Stop and remove a running container
-	docker container rm -f $(CAR_MODEL) 2>/dev/null || true
+	docker container rm -f $(APP_ID) 2>/dev/null || true
 
 status: ## Check status of container
-	docker container ls -f name=$(CAR_MODEL)
+	docker container ls -f name=$(APP_ID)
 
 sh: ## Access running container
-	docker exec -ti $(CAR_MODEL) sh
+	docker exec -ti $(APP_ID) sh
 
 log: ## Follow the logs
-	docker logs -f $(CAR_MODEL)
+	docker logs -f $(APP_ID)
 
 restart: stop build start status ## Alias to stop, build, start and status
 
