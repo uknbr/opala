@@ -375,7 +375,7 @@ def extract_url():
                     else:
                         if not args.q:
                             print(f"Car was not found [{st}]")
-                        logger.warn("Car code was not found [{st}]")
+                        logger.warning("Car code was not found [{st}]")
                     break
                 else:
                     item += 1
@@ -668,6 +668,8 @@ def get_logger(
     level=logging.DEBUG,
     formatter=logging.Formatter("%(asctime)s | %(levelname)s | %(message)s"),
 ):
+
+
     fileHandler = logging.FileHandler(f"{base_path}olx/log/car.log")
     fileHandler.setLevel(level)
     fileHandler.setFormatter(formatter)
