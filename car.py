@@ -323,7 +323,7 @@ def update_mqtt(topic, value):
             client.publish(f"{mqtt_host}/{car_model}/{topic}", value, retain=True)
             logger.debug(f"MQTT ({topic}): {value}")
         except Exception as e:
-            logger.error(e)
+            logger.error(f"MQTT error: {repr(e)}")
 
 
 def get_datetime_epoch():
@@ -403,7 +403,7 @@ def get_car(car):
             json_string = str(car_info.contents[0])
             offer = json.loads(json_string)
         except Exception as e:
-            logger.error(f"Failed to load JSON: {e}")
+            logger.error(f"Failed to load offer JSON: {repr(e)}")
             logger.error(json_string)
             return -1
 
@@ -414,12 +414,11 @@ def get_car(car):
         for ad in soup.find_all("script"):
             if "pageType" in str(ad):
                 try:
-                    #details = json.loads(str(ad).split("[", 1)[1].split("]")[0])
                     ad_string = str(ad)
                     json_string = ad_string[ad_string.find("[")+len("["):ad_string.rfind("]")]
                     details = json.loads(json_string)
                 except Exception as e:
-                    logger.error(f"Failed to load JSON: {e}")
+                    logger.error(f"Failed to load details JSON: {repr(e)}")
                     logger.error(ad_string)
                     return -1
 
@@ -885,7 +884,7 @@ try:
     car_re = get_year(car_date_e)
 
 except Exception as e:
-    logger.error(f"Variable is not defined:\n{e}")
+    logger.error(f"Variable is not defined: {repr(e)}")
     raise SystemExit("Variable is not defined! Exiting...")
 
 mqtt_enable = eval(os.getenv("MQTT_ENABLE", "False"))
