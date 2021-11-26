@@ -13,7 +13,7 @@ help: ## Display help message
 run: ## Run Python script
 	python3 car.py -r $(CAR_REGION)
 
-build: ## Build the container
+image: ## Build the container
 	docker image build --force-rm --network host -t $(APP_IMAGE):$(APP_VERSION) .
 
 start: ## Run container based on `config.env`
@@ -33,7 +33,7 @@ sh: ## Access running container
 log: ## Follow the logs
 	docker logs -f $(APP_ID)
 
-restart: stop build start status ## Alias to stop, build, start and status
+restart: stop start status ## Alias to stop, build, start and status
 
 sync: ## Sync data to MySQL
 	sqlite3mysql -f olx/db/car.db -d $(MYSQL_DATABASE) -h $(MYSQL_HOST) -P $(MYSQL_PORT) -u $(MYSQL_USER) -p $(MYSQL_PASS)
