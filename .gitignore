@@ -1,8 +1,15 @@
 ### Python ###
 __pycache__/
 
-### OLX ###
+### Win
+urlextract/
+
+### OLX data ###
 olx/
 
 ### Config ###
 custom.env
+
+### PyInstaller
+dist/
+build/
