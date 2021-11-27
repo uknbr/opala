@@ -13,3 +13,7 @@ custom.env
 ### PyInstaller
 dist/
 build/
+olx.spec
+
+### Release
+olx.zip
