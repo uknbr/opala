@@ -1,6 +1,7 @@
-FROM python:3.7.0-alpine3.7
+#FROM python:3.7.0-alpine3.7
+FROM python:3.8-alpine
 
-MAINTAINER "pedro.pavan@linuxmail.org"
+LABEL author="pedro.pavan@linuxmail.org"
 LABEL github="https://github.com/uknbr"
 LABEL platform="OLX"
 LABEL items="car"

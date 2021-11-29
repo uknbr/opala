@@ -1,8 +1,18 @@
 ### Python ###
 __pycache__/
 
-### OLX ###
+### Win
+urlextract/
+
+### OLX data ###
 olx/
 
 ### Config ###
 custom.env
+
+### Release
+build/
+olx.zip
+
+### Inno Setup
+Output/
