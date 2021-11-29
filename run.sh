@@ -8,7 +8,7 @@ db_sync=${MYSQL_SYNC:-False}
 
 while true ; do
 	echo "[$(date +'%D %T')] Running in silent mode with parameters: ${CAR_MODEL} | ${CAR_REGION} | ${CAR_DATE_BEGIN} | ${CAR_DATE_END}"
-	python3 ${BASEDIR}/car.py -r ${CAR_REGION} -b ${CAR_DATE_BEGIN} -e ${CAR_DATE_END} -q || true
+	python3 ${BASEDIR}/car.py -q || true
 
 	if [ "${db_sync}" == "True" ] ; then
 		echo "[$(date +'%D %T')] Sync local data to MySQL (${MYSQL_HOST}:${MYSQL_PORT})"

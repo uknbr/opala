@@ -21,22 +21,24 @@ import time
 import os
 import argparse
 import logging
+from dotenv import load_dotenv
+from colorama import init, Fore, Back, Style
 
+""" Config """
+class setup:
+    CONFIG = "olx.ini"
+    URL_WIN_CACHE_FILE = "tlds-alpha-by-domain.txt"
+    URL_WIN_CACHE_DIR = ".\\urlextract\\data\\"
 
-""" Colors """
-
-
-class color:
-    PURPLE = "\033[95m"
-    CYAN = "\033[96m"
-    DARKCYAN = "\033[36m"
-    BLUE = "\033[94m"
-    GREEN = "\033[92m"
-    YELLOW = "\033[93m"
-    RED = "\033[91m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
-    END = "\033[0m"
+""" Colors & Terminal """
+init()
+def clear():
+    # windows
+    if os.name == "nt":
+        _ = os.system("cls")
+    # mac and linux
+    else:
+        _ = os.system("clear")
 
 
 """ Functions """
@@ -323,11 +325,11 @@ def update_mqtt(topic, value):
             client.publish(f"{mqtt_host}/{car_model}/{topic}", value, retain=True)
             logger.debug(f"MQTT ({topic}): {value}")
         except Exception as e:
-            logger.error(e)
+            logger.error(f"MQTT error: {repr(e)}")
 
 
 def get_datetime_epoch():
-    return int(datetime.datetime.now().strftime("%s"))
+    return int(datetime.datetime.now().timestamp())
 
 
 def extract_url():
@@ -359,6 +361,22 @@ def extract_url():
 
                 html = response.text
                 html = html.replace(" ", "").replace("=", "").replace("&quot", "")
+
+                """ URL cache (windows only) """
+                if os.name == "nt":
+                    logger.info(f"Windows platform detected")
+                    logger.debug(f"Current directory: {os.getcwd()}")
+                    logger.debug(f"Create URL cache directory {setup.URL_WIN_CACHE_DIR}")
+                    Path(f"{setup.URL_WIN_CACHE_DIR}").mkdir(parents=True, exist_ok=True)
+                    if os.path.isfile(setup.URL_WIN_CACHE_FILE):
+                        with open(setup.URL_WIN_CACHE_FILE, "r") as infile:
+                            content = infile.read()
+                            with open(f"{setup.URL_WIN_CACHE_DIR}{setup.URL_WIN_CACHE_FILE}", "w") as outfile:
+                                outfile.write(content)
+                    else:
+                        logger.error(f"File not found: {setup.URL_WIN_CACHE_FILE}")
+                        raise SystemExit("Windows requires cache dir/file")
+
                 extractor = URLExtract()
                 href = []
 
@@ -375,7 +393,7 @@ def extract_url():
                     else:
                         if not args.q:
                             print(f"Car was not found [{st}]")
-                        logger.warn("Car code was not found [{st}]")
+                        logger.warning("Car code was not found [{st}]")
                     break
                 else:
                     item += 1
@@ -403,7 +421,7 @@ def get_car(car):
             json_string = str(car_info.contents[0])
             offer = json.loads(json_string)
         except Exception as e:
-            logger.error(f"Failed to load JSON: {e}")
+            logger.error(f"Failed to load offer JSON: {repr(e)}")
             logger.error(json_string)
             return -1
 
@@ -414,12 +432,11 @@ def get_car(car):
         for ad in soup.find_all("script"):
             if "pageType" in str(ad):
                 try:
-                    #details = json.loads(str(ad).split("[", 1)[1].split("]")[0])
                     ad_string = str(ad)
                     json_string = ad_string[ad_string.find("[")+len("["):ad_string.rfind("]")]
                     details = json.loads(json_string)
                 except Exception as e:
-                    logger.error(f"Failed to load JSON: {e}")
+                    logger.error(f"Failed to load details JSON: {repr(e)}")
                     logger.error(ad_string)
                     return -1
 
@@ -577,7 +594,7 @@ def get_car(car):
                             _numberOfDoors,
                             _mileage,
                             car_score,
-                            f"{color.GREEN}New{color.END}",
+                            f"{Fore.GREEN}New{Style.RESET_ALL}",
                         ]
                     )
 
@@ -617,7 +634,7 @@ def get_car(car):
                                 _numberOfDoors,
                                 _mileage,
                                 "-",
-                                f"{color.YELLOW}Update{color.END}",
+                                f"{Fore.YELLOW}Update{Style.RESET_ALL}",
                             ]
                         )
                         sql = (
@@ -669,6 +686,8 @@ def get_logger(
     level=logging.DEBUG,
     formatter=logging.Formatter("%(asctime)s | %(levelname)s | %(message)s"),
 ):
+
+
     fileHandler = logging.FileHandler(f"{base_path}olx/log/car.log")
     fileHandler.setLevel(level)
     fileHandler.setFormatter(formatter)
@@ -790,9 +809,147 @@ def db_create_table_offer():
     return table
 
 
+def main():
+    if not args.q:
+        print(
+            f"Search for {Fore.BLUE}{car_model}{Style.RESET_ALL} in {Fore.BLUE}{car_brand}{Style.RESET_ALL}"
+        )
+        print(
+            f"Dates between {Fore.BLUE}{car_date_s}{Style.RESET_ALL} and {Fore.BLUE}{car_date_e}{Style.RESET_ALL} in {Fore.BLUE}{car_location}{Style.RESET_ALL}"
+        )
+        print(f"Connecting to {Fore.MAGENTA}OLX{Style.RESET_ALL}.com.br...")
+
+    global car_offer
+    car_offer = PrettyTable(
+        [
+            f"{Fore.MAGENTA}CODE{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}PRICE{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}STATE{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}YEAR{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}FUEL{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}COLOR{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}DOORS{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}KM{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}SCORE{Style.RESET_ALL}",
+            f"{Fore.MAGENTA}STATUS{Style.RESET_ALL}",
+        ]
+    )
+
+    cars = extract_url()
+    cars_total = len(cars)
+
+    if cars_total == 0:
+        logger.error("Exit")
+        sys.exit(1)
+
+    cars_found = 0
+    cars_update = 0
+    cars_exists = 0
+    cars_error = 0
+    cars_count = 0
+
+    for url in cars:
+        result = get_car(url)
+        cars_count += 1
+
+        if result == -1:
+            cars_error += 1
+            car_result = f"{Fore.RED}={Style.RESET_ALL}"
+        elif result == 0:
+            cars_exists += 1
+            car_result = f"{Fore.CYAN}={Style.RESET_ALL}"
+        elif result == 1:
+            cars_found += 1
+            car_result = f"{Fore.GREEN}+{Style.RESET_ALL}"
+        else:
+            cars_update += 1
+            car_result = f"{Fore.YELLOW}*{Style.RESET_ALL}"
+
+        if not args.q:
+            print(
+                f"{Style.BRIGHT}Car{Style.RESET_ALL}: {cars_count}/{cars_total} [{car_result}]",
+                end="\r",
+            )
+
+    if cars_total != cars_exists:
+        if not args.q:
+            print(f"\n\n{car_offer}")
+        logger.info("Update available: YES")
+    else:
+        if not args.q:
+            print(
+                f"\n\nThere is {Style.BRIGHT}no update available{Style.RESET_ALL} at the moment."
+            )
+        logger.info("Update available: NO")
+
+
+    time_end = time.time()
+    time_elapsed = round(time_end - time_start, 2)
+    rate = round(cars_total / time_elapsed, 2)
+
+    """ Status """
+    conn = engine.connect()
+    sql = table_status.insert().values(
+        duration=time_elapsed,
+        rate=rate,
+        found=cars_found,
+        update=cars_update,
+        error=cars_error,
+        total=cars_total,
+        region=car_location,
+        date=get_datetime_epoch(),
+    )
+    conn.execute(sql)
+    logger.info("Saved table: status")
+
+    """ MQTT """
+    result = conn.execute(select([func.avg(table_offer.c.price)]))
+    avg_price = round(result.fetchone()[0], 2)
+
+    update_mqtt("found", cars_found)
+    update_mqtt("total", cars_total)
+    update_mqtt(
+        "last", datetime.datetime.fromtimestamp(get_datetime_epoch()).strftime("%c")
+    )
+    update_mqtt("location", car_location)
+    update_mqtt("update", cars_update)
+    update_mqtt("duration", time_elapsed)
+    update_mqtt("rate", rate)
+    update_mqtt("avg", avg_price)
+    logger.info("Updated MQTT topics")
+
+    """ Summary """
+    car_status = PrettyTable(
+        [f"{Fore.MAGENTA}ITEM{Style.RESET_ALL}", f"{Fore.MAGENTA}COUNT{Style.RESET_ALL}"]
+    )
+    car_status.add_row(["Duration", time_elapsed])
+    car_status.add_row(["Region", car_location])
+    car_status.add_row(
+        [f"{Fore.GREEN}New{Style.RESET_ALL}", f"{Fore.GREEN}{cars_found}{Style.RESET_ALL}"]
+    )
+    car_status.add_row(
+        [f"{Fore.CYAN}Exist{Style.RESET_ALL}", f"{Fore.CYAN}{cars_exists}{Style.RESET_ALL}"]
+    )
+    car_status.add_row(
+        [f"{Fore.YELLOW}Update{Style.RESET_ALL}", f"{Fore.YELLOW}{cars_update}{Style.RESET_ALL}"]
+    )
+    car_status.add_row(
+        [f"{Fore.RED}Error{Style.RESET_ALL}", f"{Fore.RED}{cars_error}{Style.RESET_ALL}"]
+    )
+    car_status.add_row(["Rate", rate])
+    car_status.add_row(["Total", cars_total])
+    if not args.q:
+        print(f"\n{car_status}")
+    logger.info("Display car status")
+
+
 """ ############ """
 """     Main     """
 """ ############ """
+
+""" Setup """
+if os.path.isfile(setup.CONFIG):
+    load_dotenv(setup.CONFIG)
 
 """ Folders """
 data_enable = eval(os.getenv("DATA_MOUNT_ENABLE", "False"))
@@ -829,34 +986,22 @@ logger.info("Reading parameters")
 app_version = os.getenv("APP_VERSION", "?")
 
 parser = argparse.ArgumentParser(description="[OLX] Find your car now!")
-parser.add_argument(
-    "-r",
-    action="store",
-    dest="region",
-    help="Location/Region/State",
-    type=str,
-    nargs=1,
-    required=True,
-)
-parser.add_argument(
-    "-b", action="store", dest="year_begin", help="From year (begin)", type=int, nargs=1
-)
-parser.add_argument(
-    "-e", action="store", dest="year_end", help="Until year (end)", type=int, nargs=1
-)
 parser.add_argument("-q", action="store_true", help="Quite mode, without output")
 parser.add_argument("--version", action="version", version=f"%(prog)s {app_version}")
 args = parser.parse_args()
 
-car_location_list = []
-for st in args.region[0].split(","):
-    car_location_list.append(get_region(st))
-
-car_location = str.join(",", car_location_list)
-car_region = str.lower(args.region[0])
-logger.debug(f"Location: {car_location}")
-
 try:
+    daemon_mode = eval(os.getenv("DAEMON_MODE", "False"))
+    daemon_interval = int(os.getenv("DAEMON_INTERVAL", 10)) * 60
+
+    car_location_list = []
+    car_region_p = os.getenv("CAR_REGION")
+    for st in car_region_p.split(","):
+        car_location_list.append(get_region(st))
+    car_location = str.join(",", car_location_list)
+    car_region = str.lower(car_region_p)
+    logger.debug(f"Location: {car_location}")
+
     car_brand = os.getenv("CAR_BRAND")
     car_model = os.getenv("CAR_MODEL")
 
@@ -867,25 +1012,17 @@ try:
     else:
         car_km_check = False
 
-    if args.year_begin is None:
-        car_date_s = int(os.getenv("CAR_DATE_BEGIN"))
-        logger.debug(f"ENV - Year (begin): {car_date_s}")
-    else:
-        car_date_s = args.year_begin[0]
-        logger.debug(f"ARG - Year (begin): {car_date_s}")
+    car_date_s = int(os.getenv("CAR_DATE_BEGIN"))
+    logger.debug(f"Year (begin): {car_date_s}")
 
-    if args.year_end is None:
-        car_date_e = int(os.getenv("CAR_DATE_END"))
-        logger.debug(f"ENV - Year (end): {car_date_e}")
-    else:
-        car_date_e = args.year_end[0]
-        logger.debug(f"ARG - Year (end): {car_date_e}")
+    car_date_e = int(os.getenv("CAR_DATE_END"))
+    logger.debug(f"Year (end): {car_date_e}")
 
     car_rs = get_year(car_date_s)
     car_re = get_year(car_date_e)
 
 except Exception as e:
-    logger.error(f"Variable is not defined:\n{e}")
+    logger.error(f"Variable is not defined: {repr(e)}")
     raise SystemExit("Variable is not defined! Exiting...")
 
 mqtt_enable = eval(os.getenv("MQTT_ENABLE", "False"))
@@ -920,138 +1057,16 @@ car_score_price = int(os.getenv("SCORE_PRICE", 0))
 car_score_keyword = os.getenv("SCORE_KEYWORD", "")
 car_score_km = os.getenv("SCORE_KM", 0)
 
-
-""" Init """
-if not args.q:
-    print(
-        f"Search for {color.BLUE}{car_model}{color.END} in {color.BLUE}{car_brand}{color.END}"
-    )
-    print(
-        f"Dates between {color.BLUE}{car_date_s}{color.END} and {color.BLUE}{car_date_e}{color.END} in {color.BLUE}{car_location}{color.END}"
-    )
-    print(f"Connecting to {color.PURPLE}OLX{color.END}.com.br...")
-
-car_offer = PrettyTable(
-    [
-        f"{color.PURPLE}CODE{color.END}",
-        f"{color.PURPLE}PRICE{color.END}",
-        f"{color.PURPLE}STATE{color.END}",
-        f"{color.PURPLE}YEAR{color.END}",
-        f"{color.PURPLE}FUEL{color.END}",
-        f"{color.PURPLE}COLOR{color.END}",
-        f"{color.PURPLE}DOORS{color.END}",
-        f"{color.PURPLE}KM{color.END}",
-        f"{color.PURPLE}SCORE{color.END}",
-        f"{color.PURPLE}STATUS{color.END}",
-    ]
-)
-
-cars = extract_url()
-cars_total = len(cars)
-
-if cars_total == 0:
-    logger.error("Exit")
-    sys.exit(1)
-
-cars_found = 0
-cars_update = 0
-cars_exists = 0
-cars_error = 0
-cars_count = 0
-
-for url in cars:
-    result = get_car(url)
-    cars_count += 1
-
-    if result == -1:
-        cars_error += 1
-        car_result = f"{color.RED}={color.END}"
-    elif result == 0:
-        cars_exists += 1
-        car_result = f"{color.CYAN}={color.END}"
-    elif result == 1:
-        cars_found += 1
-        car_result = f"{color.GREEN}+{color.END}"
-    else:
-        cars_update += 1
-        car_result = f"{color.YELLOW}*{color.END}"
-
-    if not args.q:
-        print(
-            f"{color.BOLD}Car{color.END}: {cars_count}/{cars_total} [{car_result}]",
-            end="\r",
-        )
-
-if cars_total != cars_exists:
-    if not args.q:
-        print(f"\n\n{car_offer}")
-    logger.info("Update available: YES")
+logger.debug(f"DAEMON mode: {daemon_mode}")
+if daemon_mode:
+    while True:
+        main()
+        print(f"\n[{datetime.datetime.now()}] {Style.BRIGHT}Waiting{Style.RESET_ALL} for {Fore.BLUE}next execution{Style.RESET_ALL}...")
+        logger.info(f"Sleeping for {daemon_interval} seconds")
+        time.sleep(daemon_interval)
+        clear()
 else:
-    if not args.q:
-        print(
-            f"\n\nThere is {color.UNDERLINE}no update available{color.END} at the moment."
-        )
-    logger.info("Update available: NO")
-
-
-time_end = time.time()
-time_elapsed = round(time_end - time_start, 2)
-rate = round(cars_total / time_elapsed, 2)
-
-""" Status """
-conn = engine.connect()
-sql = table_status.insert().values(
-    duration=time_elapsed,
-    rate=rate,
-    found=cars_found,
-    update=cars_update,
-    error=cars_error,
-    total=cars_total,
-    region=car_location,
-    date=get_datetime_epoch(),
-)
-conn.execute(sql)
-logger.info("Saved table: status")
-
-""" MQTT """
-result = conn.execute(select([func.avg(table_offer.c.price)]))
-avg_price = round(result.fetchone()[0], 2)
-
-update_mqtt("found", cars_found)
-update_mqtt("total", cars_total)
-update_mqtt(
-    "last", datetime.datetime.fromtimestamp(get_datetime_epoch()).strftime("%c")
-)
-update_mqtt("location", car_location)
-update_mqtt("update", cars_update)
-update_mqtt("duration", time_elapsed)
-update_mqtt("rate", rate)
-update_mqtt("avg", avg_price)
-logger.info("Updated MQTT topics")
-
-""" Summary """
-car_status = PrettyTable(
-    [f"{color.PURPLE}ITEM{color.END}", f"{color.PURPLE}COUNT{color.END}"]
-)
-car_status.add_row(["Duration", time_elapsed])
-car_status.add_row(["Region", car_location])
-car_status.add_row(
-    [f"{color.GREEN}New{color.END}", f"{color.GREEN}{cars_found}{color.END}"]
-)
-car_status.add_row(
-    [f"{color.CYAN}Exist{color.END}", f"{color.CYAN}{cars_exists}{color.END}"]
-)
-car_status.add_row(
-    [f"{color.YELLOW}Update{color.END}", f"{color.YELLOW}{cars_update}{color.END}"]
-)
-car_status.add_row(
-    [f"{color.RED}Error{color.END}", f"{color.RED}{cars_error}{color.END}"]
-)
-car_status.add_row(["Rate", rate])
-car_status.add_row(["Total", cars_total])
-if not args.q:
-    print(f"\n{car_status}")
-logger.info("Display car status")
+    main()
 
 """ Exit """
 logger.info(f"O L X\n\n{bar}\n--- Exiting  ---\n{bar}\n")

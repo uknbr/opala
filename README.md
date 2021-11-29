@@ -30,6 +30,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 - Telegram alert - **Update** price
 - MQTT integration - dashboard with statistics
 - Dashboard with offers and statistics
+- Binary for **Windows** platform (olx.zip)
 
 ## Demo
 ![alt text](demo/loading.png "Loading data")\
@@ -67,8 +68,9 @@ opala:~$ make sync
 | APP_IMAGE          | Container image        | uknbr/olx_car |
 | APP_VERSION        | Container version      | latest        |
 | APP_ID             | Container name         | opala         |
-| DAEMON_INTERVAL    | Loop interval          | 10            |
+| DAEMON_INTERVAL    | Interval in minutes    | 10            |
 | DAEMON_LOG         | Log level              | DEBUG         |
+| DAEMON_MODE        | Enable loop            | True or False |
 | DATA_MOUNT_ENABLE  | Enable data            | True or False |
 | DATA_MOUNT_PATH    | Data path              | /data         |
 | CAR_BRAND          | Brand                  | gm-chevrolet  |
@@ -145,3 +147,4 @@ docker-compose -f olx.yml up -d
 - [x] Configure parameters related to score
 - [x] Detect good opportunities by score
 - [ ] Alerts based on parameters
+- [x] Support Windows platform
