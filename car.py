@@ -1061,9 +1061,8 @@ logger.debug(f"DAEMON mode: {daemon_mode}")
 if daemon_mode:
     while True:
         main()
-
-        print(f"\n{Style.BRIGHT}Waiting{Style.RESET_ALL} for next execution...")
-        logger.info(f"Sleeping for {daemon_interval}")
+        print(f"\n[{datetime.datetime.now()}] {Style.BRIGHT}Waiting{Style.RESET_ALL} for {Fore.BLUE}next execution{Style.RESET_ALL}...")
+        logger.info(f"Sleeping for {daemon_interval} seconds")
         time.sleep(daemon_interval)
         clear()
 else:

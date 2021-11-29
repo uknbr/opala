@@ -1,19 +1,21 @@
 @echo off
 
 :: delete old files
-::del /s /f /q "dist\olx\olx.exe"
-del /s /f /q "dist\*"
-del /s /f /q "olx.zip"
+rmdir /s /q ".\__pycache__\"
+rmdir /s /q ".\Output\"
+rmdir /s /q ".\build\"
+del /s /f /q ".\olx.zip"
 
 :: to EXE
-pyinstaller --clean --noupx -n olx -y -i .\olx.ico .\car.py
+python.exe .\setup.py build
 
 :: Copy files
-copy /v /b /y olx.ini .\dist\olx\
-copy /v /b /y tlds-alpha-by-domain.txt .\dist\olx\
+copy /v /b /y olx.ini .\build\exe.win-amd64-3.8\
+copy /v /b /y tlds-alpha-by-domain.txt .\build\exe.win-amd64-3.8\
 
-:: compact
-"C:\ProgramData\chocolatey\bin\7z.exe" a olx.zip .\dist\olx\*
-"C:\ProgramData\chocolatey\bin\7z.exe" a olx.zip olx.ini
+:: to Zip
+"C:\ProgramData\chocolatey\bin\7z.exe" a olx.zip .\build\exe.win-amd64-3.8\*
 "C:\ProgramData\chocolatey\bin\7z.exe" a olx.zip olx.ico
-"C:\ProgramData\chocolatey\bin\7z.exe" a olx.zip tlds-alpha-by-domain.txt
+
+:: Installer
+ISCC.exe .\olx.iss
