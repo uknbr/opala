@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OLX Car"
-#define MyAppVersion "0.5.1"
+#define MyAppVersion "0.5.2"
 #define MyAppPublisher "uknbr"
 #define MyAppURL "https://github.com/uknbr/opala"
-#define MyAppExeName "olx.exe"
+#define MyAppExeName "car.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\olx
+DefaultDirName={%USERPROFILE}\olx
 DisableProgramGroupPage=yes
 LicenseFile=C:\Users\pedroa\Downloads\opala\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
@@ -37,7 +37,7 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\lib\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\car.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\olx.ini"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\python3.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -48,6 +48,10 @@ Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\tlds-alpha-by-d
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}\olx"
+Type: filesandordirs; Name: "{app}\urlextract"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
