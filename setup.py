@@ -1,6 +1,6 @@
 from cx_Freeze import setup, Executable
 
-base = None    
+base = None
 
 executables = [
     Executable(
@@ -13,15 +13,15 @@ executables = [
 
 packages = ["idna", "colorama", "time", "sqlalchemy"]
 options = {
-    'build_exe': {    
+    'build_exe': {
         'packages':packages,
-    },    
+    },
 }
 
 setup(
     name = "OLX Car",
     options = options,
-    version = "0.5.1",
+    version = "0.5.2",
     description = "Find your car now!",
     executables = executables
 )
