@@ -21,7 +21,7 @@ options = {
 setup(
     name = "OLX Car",
     options = options,
-    version = "0.5.2",
+    version = "0.5.3",
     description = "Find your car now!",
     executables = executables
 )
