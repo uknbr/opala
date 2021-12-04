@@ -1,4 +1,4 @@
-# Change the default config with `make cnf="custom.env" build`
+# Change the default config with: make cnf="custom.env" status
 cnf ?= config.env
 include $(cnf)
 export $(shell sed 's/=.*//' $(cnf))
@@ -10,13 +10,10 @@ help: ## Display help message
 
 .DEFAULT_GOAL := help
 
-run: ## Run Python script
-	python3 car.py -r $(CAR_REGION)
-
 image: ## Build the container
 	docker image build --force-rm --network host -t $(APP_IMAGE):$(APP_VERSION) .
 
-start: ## Run container based on `config.env`
+start: ## Run container based on config file
 	mkdir -p olx
 	chmod 777 olx/
 	docker container run -dti --env-file=./$(cnf) --name=$(APP_ID) --label id=$(APP_ID) --label app=olx --restart=always --network host -v $(shell pwd)/olx:$(DATA_MOUNT_PATH)/olx $(APP_IMAGE):$(APP_VERSION)
@@ -35,12 +32,8 @@ log: ## Follow the logs
 
 restart: stop start status ## Alias to stop, start and status
 
-sync: ## Sync data to MySQL
-	sqlite3mysql -f olx/db/car.db -d $(MYSQL_DATABASE) -h $(MYSQL_HOST) -P $(MYSQL_PORT) -u $(MYSQL_USER) -p $(MYSQL_PASS)
-
 dashboard: ## Start dashboard
-	cd dashboard
-	docker-compose -f olx.yml up -d
+	docker-compose dashboard/olx.yml up -d
 
 version: ## Output the current version
 	@echo "$(APP_IMAGE):$(APP_VERSION)"
