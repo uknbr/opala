@@ -26,9 +26,9 @@ from colorama import init, Fore, Back, Style
 
 """ Config """
 class setup:
-    CONFIG = "olx.ini"
-    URL_WIN_CACHE_FILE = "tlds-alpha-by-domain.txt"
-    URL_WIN_CACHE_DIR = ".\\urlextract\\data\\"
+    WIN_CONFIG_FILE = "olx.ini"
+    WIN_URL_CACHE_FILE = "tlds-alpha-by-domain.txt"
+    WIN_URL_CACHE_DIR = ".\\urlextract\\data\\"
 
 """ Colors & Terminal """
 init()
@@ -366,15 +366,15 @@ def extract_url():
                 if os.name == "nt":
                     logger.info(f"Windows platform detected")
                     logger.debug(f"Current directory: {os.getcwd()}")
-                    logger.debug(f"Create URL cache directory {setup.URL_WIN_CACHE_DIR}")
-                    Path(f"{setup.URL_WIN_CACHE_DIR}").mkdir(parents=True, exist_ok=True)
-                    if os.path.isfile(setup.URL_WIN_CACHE_FILE):
-                        with open(setup.URL_WIN_CACHE_FILE, "r") as infile:
+                    logger.debug(f"Create URL cache directory {setup.WIN_URL_CACHE_DIR}")
+                    Path(f"{setup.WIN_URL_CACHE_DIR}").mkdir(parents=True, exist_ok=True)
+                    if os.path.isfile(setup.WIN_URL_CACHE_FILE):
+                        with open(setup.WIN_URL_CACHE_FILE, "r") as infile:
                             content = infile.read()
-                            with open(f"{setup.URL_WIN_CACHE_DIR}{setup.URL_WIN_CACHE_FILE}", "w") as outfile:
+                            with open(f"{setup.WIN_URL_CACHE_DIR}{setup.WIN_URL_CACHE_FILE}", "w") as outfile:
                                 outfile.write(content)
                     else:
-                        logger.error(f"File not found: {setup.URL_WIN_CACHE_FILE}")
+                        logger.error(f"File not found: {setup.WIN_URL_CACHE_FILE}")
                         raise SystemExit("Windows requires cache dir/file")
 
                 extractor = URLExtract()
@@ -947,9 +947,10 @@ def main():
 """     Main     """
 """ ############ """
 
-""" Setup """
-if os.path.isfile(setup.CONFIG):
-    load_dotenv(setup.CONFIG)
+""" Windows config """
+if os.name == "nt":
+    if os.path.isfile(setup.WIN_CONFIG_FILE):
+        load_dotenv(setup.WIN_CONFIG_FILE)
 
 """ Folders """
 data_enable = eval(os.getenv("DATA_MOUNT_ENABLE", "False"))
