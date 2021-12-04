@@ -30,7 +30,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 - Telegram alert - **Update** price
 - MQTT integration - dashboard with statistics
 - Dashboard with offers and statistics
-- Binary for **Windows** platform (olx.zip)
+- Binary for **Windows** platform
 
 ## Demo
 ![alt text](demo/loading.png "Loading data")\
@@ -148,3 +148,4 @@ docker-compose -f olx.yml up -d
 - [x] Detect good opportunities by score
 - [ ] Alerts based on parameters
 - [x] Support Windows platform
+- [ ] Weekly reports
