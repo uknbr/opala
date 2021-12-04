@@ -2,7 +2,8 @@ version: '3'
 
 services:
   mysql:
-    image: registry.access.redhat.com/rhscl/mysql-80-rhel7:latest
+    #image: registry.access.redhat.com/rhscl/mysql-80-rhel7:latest
+    image: mysql:8.0.27
     environment:
       MYSQL_DATABASE: "olx"
       MYSQL_USER: "car"
@@ -16,7 +17,7 @@ services:
       - olx-network
 
   adminer:
-    image: adminer:4.7.7
+    image: adminer:4.8.1
     environment:
       ADMINER_DEFAULT_SERVER: mysql
     ports:
@@ -25,7 +26,7 @@ services:
       - olx-network
 
   grafana:
-    image: grafana/grafana:7.1.5
+    image: grafana/grafana:8.2.5
     ports:
       - 8090:3000
     volumes:
