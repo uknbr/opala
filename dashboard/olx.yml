@@ -35,6 +35,7 @@ services:
       - ./files/dashboard:/etc/grafana/provisioning/dashboards
     environment:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/home.json
       GF_SECURITY_ADMIN_USER: "car"
       GF_SECURITY_ADMIN_PASSWORD: "Olx@123"
     networks:
