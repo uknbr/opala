@@ -670,9 +670,18 @@ def get_car(car):
                         )
 
                         """ Telegram """
-                        telegram_bot_send_text(
-                            f"Anúncio foi atualizado em {_state}!\nValor antigo: {_price_current}\nValor novo: {_price}\n{car}"
-                        )
+                        telegram_message = f"Anúncio foi atualizado em {_state}!\nValor antigo: {_price_current}\nValor novo: {_price}\n{car}"
+                        if telegram_bot_send_text(telegram_message):
+                            sql = table_notification.insert().values(
+                                code=_code,
+                                message=re.sub(
+                                    r"http\S+", "", telegram_message.replace("\n", " ")
+                                ),
+                                date=get_datetime_epoch(),
+                            )
+                            conn.execute(sql)
+                            logger.debug(f"Added data into table: notification")
+
                         return 2
     else:
         print(f"Failed to get car: {car}")
