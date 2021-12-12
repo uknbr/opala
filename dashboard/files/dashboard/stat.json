@@ -8,29 +8,36 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
   "id": 2,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -54,7 +61,7 @@
       "id": 4,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -64,9 +71,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -104,15 +112,14 @@
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -136,7 +143,7 @@
       "id": 5,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -146,9 +153,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -186,15 +194,14 @@
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -219,7 +226,7 @@
       "id": 13,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -229,9 +236,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -262,22 +270,21 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Found",
+      "title": "AVG EXECUTION - Found",
       "type": "stat"
     },
     {
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -301,7 +308,7 @@
       "id": 8,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -311,9 +318,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -352,16 +360,15 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -386,7 +393,7 @@
       "id": 16,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -396,9 +403,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -429,7 +437,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Found",
+      "title": "LAST EXECUTION - Found",
       "type": "stat"
     },
     {
@@ -437,28 +445,20 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
-            }
-          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               }
             ]
           },
-          "unit": "short"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -475,22 +475,21 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": [],
           "fields": "",
-          "values": false
+          "values": true
         },
-        "textMode": "auto"
+        "text": {},
+        "textMode": "value"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT total FROM status ORDER BY id DESC LIMIT 1;\n",
+          "rawSql": "SELECT MAX(total) FROM status;\n",
           "refId": "A",
           "select": [
             [
@@ -521,17 +520,7 @@
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -554,7 +543,7 @@
       "id": 6,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -564,9 +553,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -604,15 +594,14 @@
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -637,7 +626,7 @@
       "id": 7,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -647,9 +636,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -687,15 +677,14 @@
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -720,7 +709,7 @@
       "id": 14,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -730,9 +719,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -763,22 +753,21 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Update",
+      "title": "AVG EXECUTION - Update",
       "type": "stat"
     },
     {
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -802,7 +791,7 @@
       "id": 9,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -812,16 +801,17 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(1) FROM notification WHERE message not like 'Novo%';",
+          "rawSql": "SELECT COUNT(1) FROM notification WHERE message like '%foi atualizado%';",
           "refId": "A",
           "select": [
             [
@@ -853,16 +843,15 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -887,7 +876,7 @@
       "id": 18,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -897,9 +886,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -930,7 +920,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Update",
+      "title": "LAST EXECUTION - Update",
       "type": "stat"
     },
     {
@@ -938,23 +928,13 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               }
             ]
@@ -972,7 +952,7 @@
       "id": 20,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -982,9 +962,10 @@
           "fields": "/^FROM_UNIXTIME\\(S\\.date\\)$/",
           "values": true
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -1023,16 +1004,17 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": "left"
+            "align": "left",
+            "displayMode": "auto"
           },
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1066,7 +1048,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 200
+                "value": 462
               },
               {
                 "id": "links",
@@ -1083,7 +1065,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 7,
         "w": 8,
         "x": 0,
         "y": 6
@@ -1093,7 +1075,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -1132,15 +1114,14 @@
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1165,7 +1146,7 @@
       "id": 11,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1175,9 +1156,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -1208,23 +1190,22 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Duration",
+      "title": "AVG EXECUTION - Duration",
       "type": "stat"
     },
     {
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 2,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1249,7 +1230,7 @@
       "id": 17,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1259,9 +1240,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -1292,23 +1274,22 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Duration",
+      "title": "LAST EXECUTION - Duration",
       "type": "stat"
     },
     {
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 2,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1333,7 +1314,7 @@
       "id": 12,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1343,9 +1324,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -1376,23 +1358,22 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Rate",
+      "title": "AVG EXECUTION - Rate",
       "type": "stat"
     },
     {
       "datasource": "MySQL",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 2,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1,
-              "value": ".com.br"
+              "options": {
+                ".com.br": {
+                  "text": ""
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1417,7 +1398,7 @@
       "id": 10,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1427,9 +1408,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "format": "table",
@@ -1460,11 +1442,11 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "EXECUTION - Rate",
+      "title": "LAST EXECUTION - Rate",
       "type": "stat"
     }
   ],
-  "schemaVersion": 26,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1491,5 +1473,5 @@
   "timezone": "",
   "title": "Stat",
   "uid": "pe2-3BOMk",
-  "version": 6
+  "version": 7
 }
