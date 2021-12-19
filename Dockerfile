@@ -15,5 +15,4 @@ RUN mkdir -p /home/car/data && chown -R car:olx /home/car/
 USER car
 RUN pip3 install -r requirements.txt --no-cache-dir --user --no-warn-script-location
 
-HEALTHCHECK --interval=10s --timeout=2s CMD pgrep -f run.sh || exit 1
 CMD [ "bash","run.sh" ]
