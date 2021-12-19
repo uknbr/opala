@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Get app version
+    - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Get app version
       run: |
         source config.env
         echo "TAG=${APP_VERSION}" >> $GITHUB_ENV
