@@ -22,7 +22,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1448,7 +1447,10 @@
   ],
   "schemaVersion": 32,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "olx",
+    "mysql"
+  ],
   "templating": {
     "list": []
   },
@@ -1473,5 +1475,5 @@
   "timezone": "",
   "title": "Global Statistics",
   "uid": "pe2-3BOMk",
-  "version": 8
+  "version": 2
 }
