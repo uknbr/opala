@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: prometheus:9090
+    org_id: 1
+    is_default: false
+    version: 1    
+    jsonData:
+      httpMethod: POST

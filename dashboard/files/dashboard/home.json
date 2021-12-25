@@ -1,115 +1,132 @@
 {
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": "-- Grafana --",
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "target": {
-            "limit": 100,
-            "matchAny": false,
-            "tags": [],
-            "type": "dashboard"
-          },
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
           "type": "dashboard"
-        }
-      ]
-    },
-    "description": "Home Dashboard",
-    "editable": false,
-    "fiscalYearStartMonth": 0,
-    "gnetId": null,
-    "graphTooltip": 0,
-    "id": 3,
-    "links": [],
-    "liveNow": false,
-    "panels": [
-      {
-        "datasource": null,
-        "gridPos": {
-          "h": 8,
-          "w": 7,
-          "x": 0,
-          "y": 0
         },
-        "id": 3,
-        "links": [],
-        "options": {
-          "folderId": 0,
-          "maxItems": 30,
-          "query": "",
-          "showHeadings": true,
-          "showRecentlyViewed": true,
-          "showSearch": false,
-          "showStarred": true,
-          "tags": []
-        },
-        "pluginVersion": "8.2.5",
-        "tags": [],
-        "title": "Dashboards",
-        "type": "dashlist"
-      },
-      {
-        "datasource": null,
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 7,
-          "y": 0
-        },
-        "id": 5,
-        "options": {
-          "content": "# OLX Car\n\n#### Sua ferramenta de busca de **carros** na [OLX](https://olx.com.br)!\n\nCriado por [Pedro Pavan](https://pedropavan.com.br)\n           ",
-          "mode": "markdown"
-        },
-        "pluginVersion": "8.2.5",
-        "title": "Bem Vindo",
-        "type": "text"
+        "type": "dashboard"
       }
+    ]
+  },
+  "description": "Home Dashboard",
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 21,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "content": "<img src=\"https://www.freevector.com/uploads/vector/preview/4170/FreeVector-Vintage-Cars-Vectors.jpg\" alt=\"Girl in a jacket\">",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.5",
+      "title": "Carros",
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "content": "# OLX Car\n\n#### Sua ferramenta de busca de **carros** na [OLX](https://olx.com.br)!\n\nCriado por [Pedro Pavan](https://pedropavan.com.br)\n\n[![Build and Push](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg?branch=master)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)\n![Lines of code](https://img.shields.io/tokei/lines/github/uknbr/opala)\n![GitHub issues](https://img.shields.io/github/issues-raw/uknbr/opala)\n![GitHub Repo stars](https://img.shields.io/github/stars/uknbr/opala)\n![GitHub last commit](https://img.shields.io/github/last-commit/uknbr/opala)\n![GitHub forks](https://img.shields.io/github/forks/uknbr/opala)\n![GitHub repo size](https://img.shields.io/github/repo-size/uknbr/opala)\n![GitHub](https://img.shields.io/github/license/uknbr/opala)\n![Docker Pulls](https://img.shields.io/docker/pulls/uknbr/olx-car)\n![Docker Stars](https://img.shields.io/docker/stars/uknbr/olx-car)\n![Docker Image Name](https://img.shields.io/badge/image%20name-uknbr%2Folx--car-blue)\n![Docker Image Version](https://img.shields.io/docker/v/uknbr/olx-car?sort=date)\n![Docker Image Size](https://img.shields.io/docker/image-size/uknbr/olx-car?sort=date)\n\n           ",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.2.5",
+      "title": "Bem Vindo",
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 13,
+        "w": 10,
+        "x": 14,
+        "y": 8
+      },
+      "id": 3,
+      "links": [],
+      "options": {
+        "folderId": 0,
+        "maxItems": 30,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": true,
+        "showSearch": false,
+        "showStarred": true,
+        "tags": []
+      },
+      "pluginVersion": "8.2.5",
+      "tags": [],
+      "title": "Dashboards",
+      "type": "dashlist"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 32,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2021-12-11T07:10:42.393Z",
+    "to": "2021-12-12T07:10:42.393Z"
+  },
+  "timepicker": {
+    "hidden": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
     ],
-    "refresh": false,
-    "schemaVersion": 32,
-    "style": "dark",
-    "tags": [],
-    "templating": {
-      "list": []
-    },
-    "time": {
-      "from": "2021-12-11T07:10:42.393Z",
-      "to": "2021-12-12T07:10:42.393Z"
-    },
-    "timepicker": {
-      "hidden": true,
-      "refresh_intervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ],
-      "type": "timepicker"
-    },
-    "timezone": "browser",
-    "title": "OLX Car",
-    "uid": "MoSAJU2nz",
-    "version": 1
-  }
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+  "timezone": "browser",
+  "title": "OLX Car",
+  "uid": "MoSAJU2nz",
+  "version": 2
+}
