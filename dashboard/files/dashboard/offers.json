@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1640405713662,
+  "iteration": 1640470151914,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -31,16 +31,7 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "mappings": [
-            {
-              "options": {
-                ".com.br": {
-                  "text": ""
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -82,7 +73,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(1) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
+          "rawSql": "SELECT\n  COUNT(O.code)\nFROM\n  offer O\nINNER JOIN\n  url U ON O.code = U.code\nWHERE\n  O.state in ($Region)\nAND O.carColor in ($Color)\nAND O.brand in ($Brand)\nAND FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND FROM_UNIXTIME(U.date) <= $__timeTo()",
           "refId": "A",
           "select": [
             [
@@ -114,16 +105,7 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "mappings": [
-            {
-              "options": {
-                ".com.br": {
-                  "text": ""
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -166,7 +148,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT AVG(mileageFromOdometer) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
+          "rawSql": "SELECT \n  AVG(O.mileageFromOdometer)\nFROM \n  offer O\nINNER JOIN\n  url U ON O.code = U.code  \nWHERE\n  O.state in ($Region) \nAND O.carColor in ($Color)\nAND O.brand in ($Brand)\nAND FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND FROM_UNIXTIME(U.date) <= $__timeTo()",
           "refId": "A",
           "select": [
             [
@@ -250,7 +232,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT AVG(S.score)\nFROM \n  offer O\nINNER JOIN score S ON O.code = S.code \nWHERE \n  O.state in ($Region)\nAND \n  O.carColor in ($Color)\nAND\n  O.brand in ($Brand);",
+          "rawSql": "SELECT\n  AVG(S.score)\nFROM \n  offer O\nINNER JOIN\n  score S ON O.code = S.code\nINNER JOIN\n  url U ON O.code = U.code  \nWHERE \n  O.state in ($Region)\nAND O.carColor in ($Color)\nAND O.brand in ($Brand)\nAND FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND FROM_UNIXTIME(U.date) <= $__timeTo()",
           "refId": "A",
           "select": [
             [
@@ -282,16 +264,7 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "mappings": [
-            {
-              "options": {
-                ".com.br": {
-                  "text": ""
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -334,7 +307,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT AVG(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
+          "rawSql": "SELECT \n  AVG(O.price)\nFROM \n  offer O\nINNER JOIN\n  url U ON O.code = U.code  \nWHERE\n  O.state in ($Region) \nAND O.carColor in ($Color)\nAND O.brand in ($Brand)\nAND FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND FROM_UNIXTIME(U.date) <= $__timeTo()",
           "refId": "A",
           "select": [
             [
@@ -418,7 +391,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT MIN(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
+          "rawSql": "SELECT \n  MIN(O.price)\nFROM \n  offer O\nINNER JOIN\n  url U ON O.code = U.code  \nWHERE\n  O.state in ($Region) \nAND O.carColor in ($Color)\nAND O.brand in ($Brand)\nAND FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND FROM_UNIXTIME(U.date) <= $__timeTo()\n",
           "refId": "A",
           "select": [
             [
@@ -502,7 +475,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT MAX(price) FROM offer WHERE state in ($Region) AND carColor in ($Color) AND brand in ($Brand);",
+          "rawSql": "SELECT \n  MAX(O.price)\nFROM \n  offer O\nINNER JOIN\n  url U ON O.code = U.code  \nWHERE\n  O.state in ($Region) \nAND O.carColor in ($Color)\nAND O.brand in ($Brand)\nAND FROM_UNIXTIME(U.date) >= $__timeFrom()\nAND FROM_UNIXTIME(U.date) <= $__timeTo()",
           "refId": "A",
           "select": [
             [
@@ -794,7 +767,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "SCORE"
+            "displayName": "DATE & TIME"
           }
         ]
       },
@@ -860,9 +833,65 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "AC",
-          "value": "AC"
+          "selected": true,
+          "text": [
+            "AC",
+            "AL",
+            "AM",
+            "AP",
+            "BA",
+            "CE",
+            "DF",
+            "ES",
+            "GO",
+            "MA",
+            "MG",
+            "MS",
+            "MT",
+            "PA",
+            "PB",
+            "PE",
+            "PI",
+            "PR",
+            "RJ",
+            "RN",
+            "RO",
+            "RR",
+            "RS",
+            "SC",
+            "SE",
+            "SP",
+            "TO"
+          ],
+          "value": [
+            "AC",
+            "AL",
+            "AM",
+            "AP",
+            "BA",
+            "CE",
+            "DF",
+            "ES",
+            "GO",
+            "MA",
+            "MG",
+            "MS",
+            "MT",
+            "PA",
+            "PB",
+            "PE",
+            "PI",
+            "PR",
+            "RJ",
+            "RN",
+            "RO",
+            "RR",
+            "RS",
+            "SC",
+            "SE",
+            "SP",
+            "TO"
+          ]
         },
         "datasource": "MySQL",
         "definition": "select distinct state from offer;",
@@ -887,9 +916,13 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "GM - CHEVROLET",
-          "value": "GM - CHEVROLET"
+          "selected": true,
+          "text": [
+            "GM - CHEVROLET"
+          ],
+          "value": [
+            "GM - CHEVROLET"
+          ]
         },
         "datasource": "MySQL",
         "definition": "select distinct brand from offer;",
@@ -982,5 +1015,5 @@
   "timezone": "browser",
   "title": "List Offers",
   "uid": "mVLx1-OMk",
-  "version": 2
+  "version": 3
 }
