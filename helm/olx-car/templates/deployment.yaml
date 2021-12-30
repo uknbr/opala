@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     reloader.stakater.com/auto: "{{ .Values.reload }}"
-  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}"
+  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}"
   labels:
     {{- include "olx-car.labels" . | nindent 4 }}
 spec:
@@ -199,11 +199,11 @@ spec:
 
               while true ; do
                 echo "[$(date +'%D %T')] Running in silent mode with parameters: ${CAR_MODEL} | ${CAR_REGION} | ${CAR_DATE_BEGIN} | ${CAR_DATE_END}"
-                python3 ${BASEDIR}/car.py -r ${CAR_REGION} -b ${CAR_DATE_BEGIN} -e ${CAR_DATE_END} -q || true
+                python3 car.py -q || true
 
                 if [ "${db_sync}" == "True" ] ; then
                   echo "[$(date +'%D %T')] Sync local data to MySQL (${MYSQL_HOST}:${MYSQL_PORT})"
-                  sqlite3mysql -f olx/db/car.db -d ${MYSQL_DATABASE} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} -p ${MYSQL_PASS} -l olx/log/sync.log -q
+                  sqlite3mysql -f olx/db/car.db -d ${MYSQL_DATABASE} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --mysql-password ${MYSQL_PASS} -l olx/log/sync.log -q
                 fi
 
                 echo "[$(date +'%D %T')] Waiting ${wait_time} seconds for next execution"

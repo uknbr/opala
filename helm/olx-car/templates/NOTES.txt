@@ -4,9 +4,9 @@
 Purpose:
   Find your car now!
   Looking for {{ .Values.configmap.car_model }}
-  Target region: {{ .Values.configmap.car_region }}
 
 Configuration:
+  Target region: {{ .Values.configmap.car_region }}
   MQTT integration = {{ .Values.configmap.mqtt_enable }}
   Telegram notification = {{ .Values.configmap.telegram_enable }}
   MySQL sync = {{ .Values.configmap.mysql_sync }}
