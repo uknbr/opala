@@ -9,24 +9,26 @@ security:
 image:
   repository: uknbr/olx-car
   pullPolicy: Always
-  tag: latest
+  tag: 0.5.4
 volume:
   path: /var/olx
   storage_class: local
 configmap:
+  app_id: opala
   daemon_interval: 10
   daemon_log: DEBUG
-  data_mount_path: /home/car/data
+  data_mount_path: /home/car/app/data
   car_brand: gm-chevrolet
   car_model: opala
   car_title: opala
   car_date_begin: 1975
   car_date_end: 1980
   car_region: es
-  mqtt_enable: False
+  car_km: 0
+  mqtt_enable: "False"
   mqtt_host: localhost
   mqtt_port: 1883
-  telegram_enable: False
+  telegram_enable: "False"
   telegram_bot_token: NA
   telegram_chat_id: NA
   score_year: 1979
@@ -34,10 +36,10 @@ configmap:
   score_door: 2
   score_fuel: Gasolina
   score_transmission: Manual
-  score_price: 30000
+  score_price: 40000
   score_keyword: SS,6cc
   score_km: 80000
-  mysql_sync: False
+  mysql_sync: "False"
   mysql_database: olx
   mysql_host: localhost
   mysql_port: 3306
@@ -48,5 +50,5 @@ resources:
     cpu: 500m
     memory: 256Mi
   requests:
-    cpu: 50m
-    memory: 128Mi
+    cpu: 10m
+    memory: 64Mi

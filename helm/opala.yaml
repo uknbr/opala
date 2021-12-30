@@ -2,6 +2,7 @@ volume:
   path: /mnt/c/data
   storage_class: standard
 configmap:
+  app_id: opala-es
   daemon_interval: 10
   car_brand: gm-chevrolet
   car_model: opala
@@ -9,7 +10,7 @@ configmap:
   car_date_begin: 1975
   car_date_end: 1980
   car_region: es
-  telegram_enable: False
+  telegram_enable: "False"
   telegram_bot_token: NA
   telegram_chat_id: NA
   score_year: 1979
@@ -19,7 +20,7 @@ configmap:
   score_transmission: Manual
   score_price: 30000
   score_keyword: SS,6cc
-  mysql_sync: False
+  mysql_sync: "False"
   mysql_database: olx
   mysql_host: localhost
   mysql_port: 3306
@@ -30,5 +31,5 @@ resources:
     cpu: 500m
     memory: 256Mi
   requests:
-    cpu: 50m
-    memory: 128Mi
+    cpu: 10m
+    memory: 64Mi
