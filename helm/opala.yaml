@@ -1,9 +1,13 @@
+image:
+  repository: uknbr/olx-car
+  tag: 0.5.5
 volume:
-  path: /mnt/c/data
+  path: /tmp/k3dvol
   storage_class: standard
+  size: 1Gi
 configmap:
   app_id: opala-es
-  daemon_interval: 10
+  daemon_interval: 1
   car_brand: gm-chevrolet
   car_model: opala
   car_title: opala

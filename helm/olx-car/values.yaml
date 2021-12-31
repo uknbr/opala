@@ -9,14 +9,16 @@ security:
 image:
   repository: uknbr/olx-car
   pullPolicy: Always
-  tag: 0.5.4
+  tag: 0.5.5
 volume:
   path: /var/olx
   storage_class: local
+  size: 1Gi
 configmap:
   app_id: opala
   daemon_interval: 10
   daemon_log: DEBUG
+  daemon_mode: "False"
   data_mount_path: /home/car/app/data
   car_brand: gm-chevrolet
   car_model: opala

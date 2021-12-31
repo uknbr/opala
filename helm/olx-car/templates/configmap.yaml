@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
 data:
   daemon_interval: "{{ .Values.configmap.daemon_interval }}"
   daemon_log: {{ .Values.configmap.daemon_log }}
