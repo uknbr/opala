@@ -20,7 +20,7 @@ spec:
         runAsUser: 222
         runAsGroup: 222
         fsGroup: 222
-      serviceAccountName: {{ .Values.security.user }}
+      serviceAccountName: "{{ .Values.security.user }}-{{ .Values.configmap.app_id }}-user"
       automountServiceAccountToken: {{ .Values.security.token }}
       containers:
         - name: {{ include "olx-car.fullname" . }}
@@ -29,170 +29,171 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: daemon_interval
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: DAEMON_LOG
               valueFrom:
                 configMapKeyRef:
                   key: daemon_log
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: DAEMON_LOG
               valueFrom:
                 configMapKeyRef:
                   key: daemon_log
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: DATA_MOUNT_ENABLE
               valueFrom:
                 configMapKeyRef:
                   key: data_mount_enable
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: DATA_MOUNT_PATH
               valueFrom:
                 configMapKeyRef:
                   key: data_mount_path
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_BRAND
               valueFrom:
                 configMapKeyRef:
                   key: car_brand
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_MODEL
               valueFrom:
                 configMapKeyRef:
                   key: car_model
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_TITLE
               valueFrom:
                 configMapKeyRef:
                   key: car_title
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_DATE_BEGIN
               valueFrom:
                 configMapKeyRef:
                   key: car_date_begin
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_DATE_END
               valueFrom:
                 configMapKeyRef:
                   key: car_date_end
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_KM
               valueFrom:
                 configMapKeyRef:
                   key: car_km
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: CAR_REGION
               valueFrom:
                 configMapKeyRef:
                   key: car_region
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MQTT_ENABLE
               valueFrom:
                 configMapKeyRef:
                   key: mqtt_enable
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MQTT_HOST
               valueFrom:
                 configMapKeyRef:
                   key: mqtt_host
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MQTT_PORT
               valueFrom:
                 configMapKeyRef:
                   key: mqtt_port
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: TELEGRAM_ENABLE
               valueFrom:
                 configMapKeyRef:
                   key: telegram_enable
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: TELEGRAM_BOT_TOKEN
               valueFrom:
                 configMapKeyRef:
                   key: telegram_bot_token
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: TELEGRAM_CHAT_ID
               valueFrom:
                 configMapKeyRef:
                   key: telegram_chat_id
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_YEAR
               valueFrom:
                 configMapKeyRef:
                   key: score_year
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_COLOR
               valueFrom:
                 configMapKeyRef:
                   key: score_color
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_DOOR
               valueFrom:
                 configMapKeyRef:
                   key: score_door
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_FUEL
               valueFrom:
                 configMapKeyRef:
                   key: score_fuel
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_TRANSMISSION
               valueFrom:
                 configMapKeyRef:
                   key: score_transmission
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_PRICE
               valueFrom:
                 configMapKeyRef:
                   key: score_price
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_KEYWORD
               valueFrom:
                 configMapKeyRef:
                   key: score_keyword
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: SCORE_KM
               valueFrom:
                 configMapKeyRef:
                   key: score_km
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MYSQL_SYNC
               valueFrom:
                 configMapKeyRef:
                   key: mysql_sync
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
                   key: mysql_database
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MYSQL_HOST
               valueFrom:
                 configMapKeyRef:
                   key: mysql_host
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MYSQL_PORT
               valueFrom:
                 configMapKeyRef:
                   key: mysql_port
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MYSQL_USER
               valueFrom:
                 configMapKeyRef:
                   key: mysql_user
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: MYSQL_PASS
               valueFrom:
                 configMapKeyRef:
                   key: mysql_pass
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.car_model }}-config"
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: VERSION
               value: {{ .Chart.Version }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - /bin/sh
+            - /bin/bash
             - -c
             - |
+              set -e
               wait_time=${DAEMON_INTERVAL:-15}
               wait_time=$((wait_time * 60))
               db_sync=${MYSQL_SYNC:-False}
@@ -233,4 +234,4 @@ spec:
       volumes:
         - name: "{{ .Chart.Name }}-share"
           persistentVolumeClaim:
-            claimName: "{{ .Chart.Name }}-volume"
+            claimName: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-volume"

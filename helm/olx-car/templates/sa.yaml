@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ .Values.security.user }}
+  name: "{{ .Values.security.user }}-{{ .Values.configmap.app_id }}-user"
