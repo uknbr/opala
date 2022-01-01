@@ -6,20 +6,18 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/uknbr/opala)
 ![GitHub](https://img.shields.io/github/license/uknbr/opala)
 ![Docker Pulls](https://img.shields.io/docker/pulls/uknbr/olx-car)
-![Docker Stars](https://img.shields.io/docker/stars/uknbr/olx-car)
 ![Docker Image Name](https://img.shields.io/badge/image%20name-uknbr%2Folx--car-blue)
 ![Docker Image Version](https://img.shields.io/docker/v/uknbr/olx-car?sort=date)
 ![Docker Image Size](https://img.shields.io/docker/image-size/uknbr/olx-car?sort=date)
-[![Build and Push](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg?branch=master)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
-
+[![CI status](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg?branch=master)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
 
 # Opala
 Use this project to look for your **Opala** or any other **car**.\
 It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 
 ## Features
-- Running on demand or scheduled via CLI
-- Also available as Docker container (run [make help](makefile) for more information)
+- Running on __demand__ or __scheduled__ via CLI
+- Also available as __Docker image__ and __Helm Chart__
 - Define target region (support multiple separated by comma)
 - Define car date range (eg: from __1975__ to __1980__)
 - Using local database (SQLite) to __save all information__
@@ -29,7 +27,7 @@ It will use [OLX](https://www.olx.com.br) platform according to your parameters.
 - Telegram alert - **New** offer
 - Telegram alert - **Update** price
 - MQTT integration - dashboard with statistics
-- Dashboard with offers and statistics
+- Dashboard with offers, statistics and charts
 - Binary for **Windows** platform
 
 ## Demo
@@ -50,6 +48,21 @@ opala:~$ make build
 opala:~$ make start
 opala:~$ make status
 opala:~$ make log
+```
+
+- Helm
+
+```console
+opala:~$ cd helm
+opala:~$ helm upgrade -i olx-car-opala-es ./olx-car -f config/opala-es.yaml --force --create-namespace --namespace olx
+opala:~$ helm upgrade -i olx-car-opala-go ./olx-car -f config/opala-go.yaml --force --create-namespace --namespace olx
+```
+
+- Windows
+Download the latest [relase ZIP file](https://github.com/uknbr/opala/releases/download/v0.5.5/olx.zip) or build your own binary:
+
+```console
+PS C:\ > .\release.bat
 ```
 
 - Script
@@ -141,7 +154,7 @@ docker-compose -f olx.yml up -d
 
 ## Roadmap
 - [x] Support another Database (MySQL)
-- [ ] Support K8s using helm
+- [x] Support K8s using helm
 - [x] Support multiple cars and brands
 - [x] Dashboard and Statistics
 - [x] Configure parameters related to score
@@ -149,3 +162,4 @@ docker-compose -f olx.yml up -d
 - [ ] Alerts based on parameters
 - [x] Support Windows platform
 - [ ] Weekly reports
+- [ ] Prepare your VM with Ansible
