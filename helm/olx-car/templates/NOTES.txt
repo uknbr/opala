@@ -6,6 +6,7 @@ Purpose:
   Looking for {{ .Values.configmap.car_model }}
 
 Configuration:
+  ID: {{ .Values.configmap.app_id }}
   Target region: {{ .Values.configmap.car_region }}
   MQTT integration = {{ .Values.configmap.mqtt_enable }}
   Telegram notification = {{ .Values.configmap.telegram_enable }}

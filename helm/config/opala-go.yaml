@@ -1,0 +1,39 @@
+image:
+  repository: uknbr/olx-car
+  tag: 0.5.5
+volume:
+  path: /tmp/k3dvol
+  storage_class: manual
+  size: 500M
+configmap:
+  app_id: opala-go
+  daemon_interval: 1
+  car_brand: gm-chevrolet
+  car_model: opala
+  car_title: opala
+  car_date_begin: 1975
+  car_date_end: 1980
+  car_region: go
+  telegram_enable: "False"
+  telegram_bot_token: NA
+  telegram_chat_id: NA
+  score_year: 1979
+  score_color: Preto
+  score_door: 2
+  score_fuel: Gasolina
+  score_transmission: Manual
+  score_price: 30000
+  score_keyword: SS,6cc
+  mysql_sync: "False"
+  mysql_database: olx
+  mysql_host: localhost
+  mysql_port: 3306
+  mysql_user: NA
+  mysql_pass: NA
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
