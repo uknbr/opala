@@ -32,7 +32,7 @@ log: ## Follow the logs
 
 restart: stop start status ## Alias to stop, start and status
 
-dash: ## Start dashboard
+monitor: ## Start dashboard
 	docker-compose -f dashboard/olx.yml up -d
 
 version: ## Output the current version

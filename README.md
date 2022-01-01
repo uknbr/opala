@@ -143,10 +143,10 @@ Data Visualization using tools:
 - [MySQL](#MySQL)
 - Adminer
 - Grafana
+- Prometheus
 
-```bash
-cd dashboard
-docker-compose -f olx.yml up -d
+```console
+opala:~$ make monitor
 ```
 
 ![alt text](demo/dashboard_offer.jpeg "Offers")\
@@ -163,3 +163,4 @@ docker-compose -f olx.yml up -d
 - [x] Support Windows platform
 - [ ] Weekly reports
 - [ ] Prepare your VM with Ansible
+- [ ] Simple server monitoring
