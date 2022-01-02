@@ -172,13 +172,14 @@ def telegram_bot_send_text(message):
         try:
             send_text = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
             response = requests.get(send_text, params=items, verify=ssl_verify)
+
+            if response.status_code != 200:
+                logger.error("Failed to send notification to Telegram")
+                return False
+
             return True
         except requests.exceptions.RequestException as e:
             logger.error(f"Telegram message: {e.strerror}")
-            return False
-
-        if response.status_code != 200:
-            logger.error("Failed to send notification to Telegram")
             return False
 
 
@@ -689,15 +690,14 @@ def get_car(car):
         sys.exit(1)
 
 
-def get_logger(
-    name: str,
-    log_file: str = None,
-    level=logging.DEBUG,
-    formatter=logging.Formatter("%(asctime)s | %(levelname)s | %(message)s"),
-):
+def get_logger(name: str):
+    formatter=logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+    if daemon_log_level == "DEBUG":
+        level=logging.DEBUG
+    else:
+        level=logging.INFO
 
-
-    fileHandler = logging.FileHandler(f"{base_path}olx/log/car.log")
+    fileHandler = logging.FileHandler(f"{base_path}olx/log/{daemon_log_name}.log")
     fileHandler.setLevel(level)
     fileHandler.setFormatter(formatter)
     logger = logging.getLogger(name)
@@ -973,6 +973,10 @@ else:
 folders = ["data", "log", "tmp", "db"]
 for folder in folders:
     Path(f"{base_path}olx/{folder}").mkdir(parents=True, exist_ok=True)
+
+""" Log """
+daemon_log_level = os.getenv("DAEMON_LOG", "DEBUG")
+daemon_log_name = os.getenv("APP_ID", "car")
 
 """ Start """
 logger = get_logger(__file__)

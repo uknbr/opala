@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - role: base
+    - role: ssh
+    - role: container
