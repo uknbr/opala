@@ -1,6 +1,6 @@
 image:
   repository: uknbr/olx-car
-  tag: 0.5.5
+  tag: 0.5.6
 volume:
   path: /tmp/k3dvol
   storage_class: manual

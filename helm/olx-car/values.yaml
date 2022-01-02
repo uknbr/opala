@@ -9,7 +9,7 @@ security:
 image:
   repository: uknbr/olx-car
   pullPolicy: Always
-  tag: 0.5.5
+  tag: 0.5.6
 volume:
   path: /var/olx
   storage_class: local

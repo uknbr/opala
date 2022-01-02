@@ -59,7 +59,7 @@ opala:~$ helm upgrade -i olx-car-opala-go ./olx-car -f config/opala-go.yaml --fo
 ```
 
 - Windows
-  - Download the latest [relase ZIP file](https://github.com/uknbr/opala/releases/download/v0.5.5/olx.zip)
+  - Download the latest [relase ZIP file](https://github.com/uknbr/opala/releases/download/v0.5.6/olx.zip)
   - Build your own binary:
 
 ```console
