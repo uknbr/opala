@@ -4,10 +4,10 @@ image:
 volume:
   path: /tmp/k3dvol
   storage_class: manual
-  size: 400M
+  size: 200M
 configmap:
   app_id: opala-es
-  daemon_interval: 1
+  daemon_interval: 5
   car_brand: gm-chevrolet
   car_model: opala
   car_title: opala

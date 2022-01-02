@@ -1,0 +1,54 @@
+---
+
+  - name: Set hostname
+    hostname:
+      name: olx-car
+
+  - name: Set timezone
+    timezone:
+      name: "{{ tz }}"
+
+  - name: Set PS1
+    lineinfile:
+      path: /etc/profile.d/olx.sh
+      line: export PS1="(OLX) [\t] \u@\h:\w \\$ \[$(tput sgr0)\]"
+      create: yes
+      owner: root
+      group: root
+      mode: 0644
+      validate: /bin/bash -n %s
+
+  - name: Enable EPEL
+    yum:
+      name: epel-release
+      state: latest
+
+  - name: Install basic packages
+    yum:
+      name: "{{ item }}"
+    with_items:
+      - git
+      - htop
+      - zip
+      - wget
+      - dos2unix
+      - vim
+      - lsof
+      - net-tools
+      - jq
+
+  - name: Install Python3
+    yum:
+      name: "{{ item }}"
+    with_items:
+      - python3
+      - python3-pip
+
+  - name: OLX user
+    user:
+      name: olx
+      comment: OLX car
+      uid: 222
+      shell: /bin/bash
+      create_home: True
+      home: /home/olx

@@ -1,0 +1,15 @@
+---
+
+  - name: Configure sshd
+    lineinfile:
+      path: "/etc/ssh/sshd_config"
+      regex: "^(#)?{{item.key}}"
+      line: "{{item.key}} {{item.value}}"
+      state: present
+    loop:
+      - { key: "ClientAliveInterval", value: 1200 }
+      - { key: "ClientAliveCountMax", value: 6 }
+      - { key: "PrintLastLog", value: "no" }
+#      - { key: "PermitRootLogin", value: "no" }
+    notify:
+      - restart ssh

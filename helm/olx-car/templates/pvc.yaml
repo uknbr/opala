@@ -18,6 +18,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-volume"
 spec:
+  volumeName: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-data"
   storageClassName: "{{ .Values.volume.storage_class }}"
   accessModes:
     - ReadWriteOnce
