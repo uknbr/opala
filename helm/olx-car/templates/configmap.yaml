@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
 data:
+  app_id: "{{ .Values.configmap.app_id }}"
   daemon_interval: "{{ .Values.configmap.daemon_interval }}"
   daemon_log: {{ .Values.configmap.daemon_log }}
   data_mount_enable: "True"

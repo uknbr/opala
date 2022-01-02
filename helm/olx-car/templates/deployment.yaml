@@ -35,15 +35,15 @@ spec:
       containers:
         - name: olx-car
           env:
+            - name: APP_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: app_id
+                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: DAEMON_INTERVAL
               valueFrom:
                 configMapKeyRef:
                   key: daemon_interval
-                  name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
-            - name: DAEMON_LOG
-              valueFrom:
-                configMapKeyRef:
-                  key: daemon_log
                   name: "{{ .Chart.Name }}-{{ .Values.configmap.app_id }}-config"
             - name: DAEMON_LOG
               valueFrom:
