@@ -1,0 +1,17 @@
+[DEFAULT]
+# Ban IP/hosts for 24 hour ( 24h*3600s = 86400s):
+bantime = {{ fail2ban_bantime }}
+
+# An ip address/host is banned if it has generated "maxretry" during the last "findtime" seconds.
+findtime = {{ fail2ban_findtime }}
+maxretry = {{ fail2ban_maxretry }}
+
+# Call iptables to ban IP address
+banaction = iptables-multiport
+
+# Enable sshd protection
+[sshd]
+enabled = true
+port    = ssh,sftp,{{ ssh_port }}
+filter  = sshd
+logpath = /var/log/secure
