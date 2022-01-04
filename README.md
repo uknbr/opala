@@ -164,4 +164,4 @@ opala:~$ make monitor
 - [x] Support Windows platform
 - [ ] Weekly reports
 - [ ] Prepare your VM with Ansible
-- [ ] Simple server monitoring
+- [x] Simple server monitoring
