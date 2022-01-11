@@ -2,36 +2,39 @@ package main
  
 import (
     "database/sql"
+    "os"
     "fmt"
-	_ "github.com/go-sql-driver/mysql"
+    "github.com/go-sql-driver/mysql"
 )
- 
+
+func getEnv(key, fallback string) string {
+    value, exists := os.LookupEnv(key)
+    if !exists {
+        value = fallback
+    }
+    return value
+}
+
 func main() {
-     
-    // create a database object which can be used
-    // to connect with database.
-    db, err := sql.Open("mysql", "car:Olx@123@tcp(localhost:8084)/olx")
-     
-    // handle error, if any.
+ 
+    cfg := mysql.Config{
+        User:   os.Getenv("MYSQL_USER"),
+        Passwd: os.Getenv("MYSQL_PASS"),
+        Net:    "tcp",
+        Addr:   getEnv("MYSQL_HOST", "localhost") + ":" + getEnv("MYSQL_PORT", "3306"),
+        DBName: os.Getenv("MYSQL_DATABASE"),
+    }    
+
+    db, err := sql.Open("mysql", cfg.FormatDSN())
     if err != nil {
         panic(err)
     }
      
-    // Now its  time to connect with oru database,
-    // database object has a method Ping.
-    // Ping returns error, if unable connect to database.
     err = db.Ping()
-     
-    // handle error
     if err != nil {
         panic(err)
     }
      
-    fmt.Print("Pong\n")
-     
-    // database object has  a method Close,
-    // which is used to free the resource.
-    // Free the resource when the function
-    // is returned.
+    fmt.Print("Pong")     
     defer db.Close()
 }
