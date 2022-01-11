@@ -1,16 +1,16 @@
 package main
  
 import (
-	"fmt"
-	"database/sql"
-	//_ "github.com/go-sql-driver/mysql"
+    "database/sql"
+    "fmt"
+	_ "github.com/go-sql-driver/mysql"
 )
  
 func main() {
      
     // create a database object which can be used
     // to connect with database.
-    db, err := sql.Open("mysql", "abc:abc@tcp(localhost:3306)/abc")
+    db, err := sql.Open("mysql", "car:Olx@123@tcp(localhost:8084)/olx")
      
     // handle error, if any.
     if err != nil {
