@@ -24,9 +24,6 @@ stop: ## Stop and remove a running container
 status: ## Check status of container
 	docker container ls -f name=$(APP_ID)
 
-sh: ## Access running container
-	docker exec -ti $(APP_ID) sh
-
 log: ## Follow the logs
 	docker logs -f $(APP_ID)
 
