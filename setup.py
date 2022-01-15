@@ -4,7 +4,7 @@ base = None
 
 executables = [
     Executable(
-        "car.py",
+        "./car/car.py",
         copyright="Copyright (C) 2020 Pedro Pavan",
         base=base,
         icon="olx.ico",

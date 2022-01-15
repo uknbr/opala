@@ -1,4 +1,4 @@
-name: Report module
+name: Build and Push - Report module
 
 on:
   push:

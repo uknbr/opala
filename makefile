@@ -1,5 +1,5 @@
 # Change the default config with: make cnf="custom.env" status
-cnf ?= config.env
+cnf ?= car/config.env
 include $(cnf)
 export $(shell sed 's/=.*//' $(cnf))
 
@@ -11,7 +11,7 @@ help: ## Display help message
 .DEFAULT_GOAL := help
 
 image: ## Build the container
-	docker image build --force-rm --network host -t $(APP_IMAGE):$(APP_VERSION) .
+	docker image build --force-rm --network host -t $(APP_IMAGE):$(APP_VERSION) ./car/
 
 start: ## Run container based on config file
 	mkdir -p olx

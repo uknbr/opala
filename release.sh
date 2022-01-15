@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-version_old=$(grep APP_VERSION config.env | cut -d '=' -f 2)
+version_old=$(grep APP_VERSION ./car/config.env | cut -d '=' -f 2)
 
 if [ $# -ne 1 ]
 then

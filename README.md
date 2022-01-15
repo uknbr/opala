@@ -66,13 +66,6 @@ opala:~$ helm upgrade -i olx-car-opala-go ./olx-car -f config/opala-go.yaml --fo
 PS C:\ > .\release.bat
 ```
 
-- Script
-
-```console
-opala:~$ make run
-opala:~$ make sync
-```
-
 ## Configuration
 - Starting with **CAR_** is used as **filter**
 - Starting with **SCORE_** will give additional **points**
