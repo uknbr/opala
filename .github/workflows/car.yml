@@ -1,4 +1,4 @@
-name: Build and Push - Car module
+name: Car module
 
 on:
   push:
