@@ -3,8 +3,12 @@ name: Build and Push - Car module
 on:
   push:
     branches: [ master ]
+    paths:
+    - 'car/**'
   pull_request:
     branches: [ master ]
+    paths:
+    - 'car/**'
 
   workflow_dispatch:
 
