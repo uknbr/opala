@@ -30,7 +30,8 @@ jobs:
     - name: Build and push relase
       uses: docker/build-push-action@v2
       with:
-        file: ./car/Dockerfile
+        file: car/Dockerfile
+        context: car
         push: true
         tags: uknbr/olx-car:${{ env.TAG }}
 
@@ -38,5 +39,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         file: ./car/Dockerfile
+        context: car
         push: true
         tags: uknbr/olx-car:latest
