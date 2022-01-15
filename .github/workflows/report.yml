@@ -22,7 +22,7 @@ jobs:
 
     - name: Release version
       run: |
-        source config.env
+        source car/config.env
         echo "TAG=${APP_VERSION}" >> $GITHUB_ENV
 
     - name: Login to DockerHub
