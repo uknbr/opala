@@ -20,7 +20,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={%USERPROFILE}\olx
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\pedroa\Downloads\opala\LICENSE
+LicenseFile=.\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputBaseFilename=olx-car
@@ -37,12 +37,12 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\car.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\olx.ini"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\python3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\python38.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\pedroa\Downloads\opala\build\exe.win-amd64-3.8\tlds-alpha-by-domain.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\build\exe.win-amd64-3.8\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\build\exe.win-amd64-3.8\car.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\build\exe.win-amd64-3.8\olx.ini"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\build\exe.win-amd64-3.8\python3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\build\exe.win-amd64-3.8\python38.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\build\exe.win-amd64-3.8\tlds-alpha-by-domain.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -55,4 +55,3 @@ Type: filesandordirs; Name: "{app}\urlextract"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
