@@ -1,8 +1,8 @@
 ---
 
-  - name: Set hostname
-    hostname:
-      name: olx-car
+#  - name: Set hostname
+#    hostname:
+#      name: olx-car
 
   - name: Set timezone
     timezone:
