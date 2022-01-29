@@ -11,7 +11,10 @@
       - { key: "ClientAliveCountMax", value: 6 }
       - { key: "PrintLastLog", value: "no" }
       - { key: "Port", value: "{{ ssh_port }}" }
-#      - { key: "PermitRootLogin", value: "no" }
+      - { key: "PermitRootLogin", value: "no" }
+      - { key: "X11Forwarding", value: "yes" }
+      - { key: "PermitEmptyPasswords", value: "no" }
+      - { key: "PasswordAuthentication", value: "no" }      
     notify:
       - restart ssh
 

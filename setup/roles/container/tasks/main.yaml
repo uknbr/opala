@@ -44,7 +44,7 @@
 
   - name: Add user to docker group
     user:
-      name: olx
+      name: "{{ olx_user }}"
       groups: docker
       append: yes
 

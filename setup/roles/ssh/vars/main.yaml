@@ -1,4 +1,4 @@
-ssh_port: 22
+ssh_port: 2244
 fail2ban_findtime: 120
 fail2ban_maxretry: 3
 fail2ban_bantime: 864000

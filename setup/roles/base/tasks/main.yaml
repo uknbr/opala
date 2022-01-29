@@ -1,8 +1,8 @@
 ---
 
-#  - name: Set hostname
-#    hostname:
-#      name: olx-car
+  - name: Set hostname
+    hostname:
+      name: olx-car
 
   - name: Set timezone
     timezone:
@@ -44,11 +44,41 @@
       - python3
       - python3-pip
 
-  - name: OLX user
+  - name: Create OLX user
     user:
-      name: olx
+      name: "{{ olx_user }}"
       comment: OLX car
       uid: 222
       shell: /bin/bash
       create_home: True
-      home: /home/olx
+      home: "/home/{{ olx_user }}"
+    register: created_user
+
+  - name: Create OLX password
+    shell: /usr/bin/openssl rand -base64 32
+    register: olx_pass
+    when: created_user.changed
+
+  - name: Define OLX password
+    shell: echo {{ olx_pass.stdout }} | passwd --stdin {{ olx_user }}
+    when: created_user.changed
+
+  - name: Details of {{ olx_user }}
+    debug: msg="Password for {{ olx_user }} is {{ olx_pass.stdout }}"
+    when: created_user.changed
+
+  - name: Create ~{{ olx_user }}/.ssh folder
+    file:
+      path: "~{{ olx_user }}/.ssh"
+      state: directory
+      owner: "{{ olx_user }}"
+      group: "{{ olx_user }}"
+      mode: 0700
+
+  - name: Upload Pub key
+    copy:
+      src: "{{ ssh_pubkey }}"
+      dest: ~{{ olx_user }}/.ssh/authorized_keys
+      owner: "{{ olx_user }}"
+      group: "{{ olx_user }}"
+      mode: 0700
