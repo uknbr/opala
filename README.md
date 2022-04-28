@@ -132,7 +132,6 @@ curl -s https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates | jq .resul
 - Adjust variables based on [Configuration](#Configuration)
 
 ## Dashboard
-
 Data Visualization using tools:
 - [MySQL](#MySQL)
 - Adminer
@@ -146,6 +145,15 @@ opala:~$ make monitor
 ![alt text](demo/dashboard_offer.jpeg "Offers")\
 ![alt text](demo/dashboard_stat.jpeg "Statistics")
 
+
+## VM
+Ansible playbook:
+
+```console
+opala:~$ cd setup/
+opala:~$ ansible-playbook setup.yaml
+```
+
 ## Roadmap
 - [x] Support another Database (MySQL)
 - [x] Support K8s using helm
@@ -156,5 +164,5 @@ opala:~$ make monitor
 - [ ] Alerts based on parameters
 - [x] Support Windows platform
 - [ ] Weekly reports
-- [ ] Prepare your VM with Ansible
+- [x] Prepare your VM with Ansible
 - [x] Simple server monitoring
