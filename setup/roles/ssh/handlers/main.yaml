@@ -13,3 +13,7 @@
   - name: restart firewalld
     service:
       name: firewalld
+
+  - name: restart ufw
+    service:
+      name: ufw

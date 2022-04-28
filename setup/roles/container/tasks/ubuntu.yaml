@@ -1,0 +1,40 @@
+---
+
+  - name: Install Docker Prerequisite
+    apt:
+      name: "{{ item }}"
+      state: latest
+      update_cache: yes
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    tags:
+      - docker
+
+  - name: Configure Docker Repository Key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+    tags:
+      - docker
+
+  - name: Add Docker Repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+      state: present
+    tags:
+      - docker
+
+  - name: Install Docker
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes      
+    with_items:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli
+    tags:
+      - docker

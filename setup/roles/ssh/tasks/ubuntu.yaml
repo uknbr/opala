@@ -1,0 +1,69 @@
+---
+
+  - name: Install Fail2ban
+    apt:
+      name: fail2ban
+      state: present
+      update_cache: yes
+    tags:
+      - ssh
+
+  - name: Configure Fail2ban
+    template:
+      src: fail2ban-ubuntu.j2
+      dest: /etc/fail2ban/jail.local
+    notify:
+      - restart fail2ban
+    tags:
+      - ssh
+
+  - name: Install ufw
+    apt:
+      package: ufw
+      state: present
+    tags:
+      - ssh
+      - firewall
+
+  - name: Configure ufw defaults
+    ufw:
+      direction: "{{ item.direction }}"
+      policy: "{{ item.policy }}"
+    with_items:
+      - { direction: 'incoming', policy: 'deny' }
+      - { direction: 'outgoing', policy: 'allow' }
+    notify:
+      - restart ufw
+    tags:
+      - ssh
+      - firewall
+
+  - name: Configure ufw rules
+    ufw:
+      rule: "{{ item.rule }}"
+      port: "{{ item.port }}"
+      proto: "{{ item.proto }}"
+    with_items:
+      - { rule: 'limit', port: '{{ ssh_port }}', proto: 'tcp' }
+      - { rule: 'allow', port: '{{ ssh_port }}', proto: 'tcp' }
+    notify:
+      - restart ufw
+    tags:
+      - ssh
+      - firewall
+
+  - name: Enable ufw logging
+    ufw:
+      logging: on
+    notify:
+      - restart ufw
+    tags:
+      - ssh
+      - firewall
+
+  - name: Enable ufw
+    ufw:
+      state: enabled
+    tags:
+      - ssh
+      - firewall

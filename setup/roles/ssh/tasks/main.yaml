@@ -1,5 +1,25 @@
 ---
 
+  - name: Create ~{{ olx_user }}/.ssh folder
+    file:
+      path: "~{{ olx_user }}/.ssh"
+      state: directory
+      owner: "{{ olx_user }}"
+      group: "{{ olx_user }}"
+      mode: 0700
+    tags:
+      - ssh
+
+  - name: Upload Pub key
+    copy:
+      src: "{{ ssh_pubkey }}"
+      dest: ~{{ olx_user }}/.ssh/authorized_keys
+      owner: "{{ olx_user }}"
+      group: "{{ olx_user }}"
+      mode: 0700
+    tags:
+      - ssh
+
   - name: Configure sshd
     lineinfile:
       path: "/etc/ssh/sshd_config"
@@ -17,37 +37,21 @@
       - { key: "PasswordAuthentication", value: "no" }      
     notify:
       - restart ssh
+    tags:
+      - ssh
 
-  - name: Install Fail2ban
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - fail2ban
+  - name: SSH CentOS
+    include_tasks: centos.yaml
+    when: ansible_os_family == "RedHat"
 
-  - name: Configure Fail2ban
-    template:
-      src: fail2ban.j2
-      dest: /etc/fail2ban/jail.local
-    notify:
-      - restart fail2ban
+  - name: SSH Ubuntu
+    include_tasks: ubuntu.yaml
+    when: ansible_os_family == "Debian"
 
   - name: Enable Fail2ban
     service:
       name: fail2ban
       state: started
       enabled: yes
-
-  - name: Enable Firewall
-    service:
-      name: firewalld
-      state: started
-      enabled: yes
-
-  - name: Configure Firewall
-    firewalld:
-      port: "{{ ssh_port }}/tcp"
-      permanent: yes
-      state: enabled
-    notify:
-      - restart firewalld
+    tags:
+      - ssh

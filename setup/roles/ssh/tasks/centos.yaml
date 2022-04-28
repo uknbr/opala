@@ -1,0 +1,39 @@
+---
+
+  - name: Install Fail2ban
+    yum:
+      name: fail2ban
+      state: present
+    tags:
+      - ssh
+
+  - name: Configure Fail2ban
+    template:
+      src: fail2ban-centos.j2
+      dest: /etc/fail2ban/jail.local
+    notify:
+      - restart fail2ban
+    tags:
+      - ssh
+
+  - name: Enable Firewall
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+    tags:
+      - ssh
+      - firewall
+
+  - name: Configure Firewall
+    firewalld:
+      port: "{{ item.port }}/item.proto"
+      permanent: yes
+      state: enabled
+    with_items:
+      - { port: '{{ ssh_port }}', proto: 'tcp' }
+    notify:
+      - restart firewalld
+    tags:
+      - ssh
+      - firewall

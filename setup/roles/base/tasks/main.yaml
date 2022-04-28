@@ -1,12 +1,27 @@
 ---
 
+  - name: Base CentOS
+    include_tasks: centos.yaml
+    when: ansible_os_family == "RedHat"
+    tags:
+      - base
+  - name: Base Ubuntu
+    include_tasks: ubuntu.yaml
+    when: ansible_os_family == "Debian"
+    tags:
+      - base
+
   - name: Set hostname
     hostname:
-      name: olx-car
+      name: "olx-car"
+    tags:
+      - base
 
   - name: Set timezone
     timezone:
       name: "{{ tz }}"
+    tags:
+      - base
 
   - name: Set PS1
     lineinfile:
@@ -17,32 +32,9 @@
       group: root
       mode: 0644
       validate: /bin/bash -n %s
+    tags:
+      - base
 
-  - name: Enable EPEL
-    yum:
-      name: epel-release
-      state: latest
-
-  - name: Install basic packages
-    yum:
-      name: "{{ item }}"
-    with_items:
-      - git
-      - htop
-      - zip
-      - wget
-      - dos2unix
-      - vim
-      - lsof
-      - net-tools
-      - jq
-
-  - name: Install Python3
-    yum:
-      name: "{{ item }}"
-    with_items:
-      - python3
-      - python3-pip
 
   - name: Create OLX user
     user:
@@ -53,32 +45,24 @@
       create_home: True
       home: "/home/{{ olx_user }}"
     register: created_user
+    tags:
+      - base
 
   - name: Create OLX password
     shell: /usr/bin/openssl rand -base64 32
     register: olx_pass
     when: created_user.changed
+    tags:
+      - base
 
   - name: Define OLX password
     shell: echo {{ olx_pass.stdout }} | passwd --stdin {{ olx_user }}
     when: created_user.changed
+    tags:
+      - base
 
   - name: Details of {{ olx_user }}
     debug: msg="Password for {{ olx_user }} is {{ olx_pass.stdout }}"
     when: created_user.changed
-
-  - name: Create ~{{ olx_user }}/.ssh folder
-    file:
-      path: "~{{ olx_user }}/.ssh"
-      state: directory
-      owner: "{{ olx_user }}"
-      group: "{{ olx_user }}"
-      mode: 0700
-
-  - name: Upload Pub key
-    copy:
-      src: "{{ ssh_pubkey }}"
-      dest: ~{{ olx_user }}/.ssh/authorized_keys
-      owner: "{{ olx_user }}"
-      group: "{{ olx_user }}"
-      mode: 0700
+    tags:
+      - base

@@ -1,0 +1,39 @@
+---
+
+  - name: Install basic packages
+    apt:
+      update_cache: yes
+      pkg:
+        - aptitude
+        - git
+        - htop
+        - zip
+        - wget
+        - dos2unix
+        - vim
+        - lsof
+        - net-tools
+        - jq
+        - python3
+        - python3-pip     
+        - python3-setuptools
+    tags:
+      - base
+      - ubuntu
+
+  - name: Update all packages
+    apt:
+      name: "*"
+      state: latest
+    tags:
+      - base
+      - ubuntu
+      - update
+
+  - name: Upgrade the OS
+    apt:
+      upgrade: dist
+    tags:
+      - base
+      - ubuntu
+      - update
