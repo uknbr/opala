@@ -56,7 +56,7 @@
       - base
 
   - name: Define OLX password
-    shell: echo {{ olx_pass.stdout }} | passwd --stdin {{ olx_user }}
+    shell: echo {{ olx_user }}:{{ olx_pass.stdout }} | chpasswd
     when: created_user.changed
     tags:
       - base
