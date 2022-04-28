@@ -5,7 +5,7 @@
     when: ansible_os_family == "RedHat"
     tags:
       - docker
-      
+
   - name: Container Ubuntu
     include_tasks: ubuntu.yaml
     when: ansible_os_family == "Debian"
@@ -21,7 +21,7 @@
       - docker
 
   - name: Install Docker Modules
-    pip: 
+    pip:
       name:
         - docker
         - docker-compose
