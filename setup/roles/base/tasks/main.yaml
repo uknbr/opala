@@ -35,7 +35,6 @@
     tags:
       - base
 
-
   - name: Create OLX user
     user:
       name: "{{ olx_user }}"
