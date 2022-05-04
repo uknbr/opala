@@ -12,3 +12,4 @@
     - role: base
     - role: ssh
     - role: container
+    - role: k8s

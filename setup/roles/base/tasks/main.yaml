@@ -5,6 +5,7 @@
     when: ansible_os_family == "RedHat"
     tags:
       - base
+
   - name: Base Ubuntu
     include_tasks: ubuntu.yaml
     when: ansible_os_family == "Debian"

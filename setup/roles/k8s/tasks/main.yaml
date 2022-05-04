@@ -1,0 +1,41 @@
+---
+
+  - name: K3d Binary
+    get_url:
+      url: https://github.com/rancher/k3d/releases/download/v{{ k3d_version }}/k3d-linux-amd64
+      dest: /usr/local/bin/k3d
+      mode: 0755
+    tags:
+      - k8s
+
+  - name: Kubectl
+    get_url:
+      url: https://dl.k8s.io/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
+      dest: /usr/local/bin/kubectl
+      mode: 0755
+    tags:
+      - k8s
+
+#  - name: Init Kubernetes
+#    command: "{{ item }}"
+#    with_items:
+#      - docker run --rm hello-world
+#      - k3d cluster delete -a
+#      - k3d cluster create {{ cluster_name }} --api-port {{ cluster_port }} -p "8080:80@loadbalancer" --agents {{ worker_nodes }}
+#      - kubectl config use-context k3d-{{ cluster_name }}
+#      - kubectl cluster-info
+#    become: yes
+#    become_user: "{{ olx_user }}"
+#    tags:
+#      - k8s
+#
+#  - name: Validate Kubernetes
+#    command: k3d cluster list --no-headers
+#    register: result
+#    failed_when:
+#      - '"1/1" not in result.stdout'
+#      - '"{{ worker_nodes }}/{{ worker_nodes }}" not in result.stdout'
+#    become: yes
+#    become_user: "{{ olx_user }}"
+#    tags:
+#      - k8s
