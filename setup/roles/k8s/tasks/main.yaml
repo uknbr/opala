@@ -16,6 +16,24 @@
     tags:
       - k8s
 
+  - name: Download Helm
+    unarchive:
+      src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
+      dest: /tmp/
+      remote_src: yes
+      mode: 0755
+    tags:
+      - k8s
+
+  - name: Copy Helm
+    copy:
+      src: /tmp/linux-amd64/helm
+      dest: /usr/local/bin/helm
+      remote_src: yes
+      mode: 0755
+    tags:
+      - k8s
+
 #  - name: Init Kubernetes
 #    command: "{{ item }}"
 #    with_items:

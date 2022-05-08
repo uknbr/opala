@@ -1,5 +1,6 @@
 k3d_version: 5.4.1
 kubectl_version: 1.24.0
+helm_version: 3.8.2
 cluster_name: opala
 cluster_port: 8443
 worker_nodes: 2
