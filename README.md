@@ -9,7 +9,8 @@
 ![Docker Image Name](https://img.shields.io/badge/image%20name-uknbr%2Folx--car-blue)
 ![Docker Image Version](https://img.shields.io/docker/v/uknbr/olx-car?sort=date)
 ![Docker Image Size](https://img.shields.io/docker/image-size/uknbr/olx-car?sort=date)
-[![CI status](https://github.com/uknbr/opala/actions/workflows/build-latest.yml/badge.svg?branch=master)](https://github.com/uknbr/opala/actions/workflows/build-latest.yml)
+[![Car Module](https://github.com/uknbr/opala/actions/workflows/car.yml/badge.svg)](https://github.com/uknbr/opala/actions/workflows/car.yml)
+[![Report module](https://github.com/uknbr/opala/actions/workflows/report.yml/badge.svg)](https://github.com/uknbr/opala/actions/workflows/report.yml)
 
 # Opala
 Use this project to look for your **Opala** or any other **car**.\
