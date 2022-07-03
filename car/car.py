@@ -466,9 +466,12 @@ def get_car(car):
                 if not _price:
                     _price = 0
 
-                sql = table_offer.select().where(table_offer.c.code == _code)
-                conn = engine.connect()
-                row = conn.execute(sql).fetchone()
+                try:
+                    sql = table_offer.select().where(table_offer.c.code == _code)
+                    conn = engine.connect()
+                    row = conn.execute(sql).fetchone()
+                except Exception as e:
+                    logger.error(f"SQL operation failed: {repr(e)}")
 
                 if row is None:
                     logger.info(f"New car ({_code})")
@@ -492,8 +495,11 @@ def get_car(car):
                     sql = table_url.insert().values(
                         code=_code, url=car, date=get_datetime_epoch()
                     )
-                    conn.execute(sql)
-                    logger.debug(f"Added data into table: url")
+                    try:
+                        conn.execute(sql)
+                        logger.debug(f"Added data into table: url")
+                    except Exception as e:
+                        logger.error(f"SQL operation failed: {repr(e)}")
 
                     """ Offer """
                     sql = table_offer.insert()
@@ -519,8 +525,11 @@ def get_car(car):
                         carColor=_carColor,
                         endTag=_endTag,
                     )
-                    conn.execute(sql)
-                    logger.debug(f"Added data into table: offer")
+                    try:
+                        conn.execute(sql)
+                        logger.debug(f"Added data into table: offer")
+                    except Exception as e:
+                        logger.error(f"SQL operation failed: {repr(e)}")
 
                     """ Save images """
                     image_count = 0
@@ -553,8 +562,11 @@ def get_car(car):
                             md5=image_hash,
                             size=image_size,
                         )
-                        conn.execute(sql)
-                        logger.debug(f"Added data into table: image ({image_file})")
+                        try:
+                            conn.execute(sql)
+                            logger.debug(f"Added data into table: image ({image_file})")
+                        except Exception as e:
+                            logger.error(f"SQL operation failed: {repr(e)}")
 
                     """ Define score """
                     car_score = 0
@@ -572,17 +584,23 @@ def get_car(car):
                         offer["makesOffer"]["itemOffered"]["description"],
                     )
 
-                    sql = table_score.insert()
-                    sql = table_score.insert().values(code=_code, score=car_score)
-                    conn.execute(sql)
-                    logger.debug(f"Added data into table: score")
+                    try:
+                        sql = table_score.insert()
+                        sql = table_score.insert().values(code=_code, score=car_score)
+                        conn.execute(sql)
+                        logger.debug(f"Added data into table: score")
+                    except Exception as e:
+                        logger.error(f"SQL operation failed: {repr(e)}")
 
                     """ History """
                     sql = table_history.insert().values(
                         code=_code, price=_price, date=get_datetime_epoch()
                     )
-                    conn.execute(sql)
-                    logger.debug(f"Added data into table (first): history ({_price})")
+                    try:
+                        conn.execute(sql)
+                        logger.debug(f"Added data into table (first): history ({_price})")
+                    except Exception as e:
+                        logger.error(f"SQL operation failed: {repr(e)}")
 
                     car_offer.add_row(
                         [
@@ -609,8 +627,11 @@ def get_car(car):
                             ),
                             date=get_datetime_epoch(),
                         )
-                        conn.execute(sql)
-                        logger.debug(f"Added data into table: notification")
+                        try:
+                            conn.execute(sql)
+                            logger.debug(f"Added data into table: notification")
+                        except Exception as e:
+                            logger.error(f"SQL operation failed: {repr(e)}")
 
                     return 1
                 else:
@@ -638,37 +659,50 @@ def get_car(car):
                                 f"{Fore.YELLOW}Update{Style.RESET_ALL}",
                             ]
                         )
-                        sql = (
-                            table_offer.update()
-                            .where(table_offer.c.code == _code)
-                            .values(price=_price)
-                        )
-                        conn.execute(sql)
-                        logger.debug(f"Updated data into table: offer")
+                        try:
+                            sql = (
+                                table_offer.update()
+                                .where(table_offer.c.code == _code)
+                                .values(price=_price)
+                            )
+                            conn.execute(sql)
+                            logger.debug(f"Updated data into table: offer")
+                        except Exception as e:
+                            logger.error(f"SQL operation failed: {repr(e)}")
 
                         """ History """
-                        sql = table_history.select().where(
-                            table_history.c.code == _code
-                        )
-                        row = conn.execute(sql).fetchone()
+                        try:
+                            sql = table_history.select().where(
+                                table_history.c.code == _code
+                            )
+                            row = conn.execute(sql).fetchone()
+                        except Exception as e:
+                            logger.error(f"SQL operation failed: {repr(e)}")
 
                         if row is None:
+                            try:
+                                sql = table_history.insert().values(
+                                    code=_code,
+                                    price=_price_current,
+                                    date=get_datetime_epoch(),
+                                )
+                                conn.execute(sql)
+                                logger.debug(
+                                    f"Added data into table (first): history ({_price_current})"
+                                )
+                            except Exception as e:
+                                logger.error(f"SQL operation failed: {repr(e)}")
+
+                        try:
                             sql = table_history.insert().values(
-                                code=_code,
-                                price=_price_current,
-                                date=get_datetime_epoch(),
+                                code=_code, price=_price, date=get_datetime_epoch()
                             )
                             conn.execute(sql)
                             logger.debug(
-                                f"Added data into table (first): history ({_price_current})"
+                                f"Added data into table (update): history ({_price})"
                             )
-                        sql = table_history.insert().values(
-                            code=_code, price=_price, date=get_datetime_epoch()
-                        )
-                        conn.execute(sql)
-                        logger.debug(
-                            f"Added data into table (update): history ({_price})"
-                        )
+                        except Exception as e:
+                            logger.error(f"SQL operation failed: {repr(e)}")
 
                         """ Telegram """
                         telegram_message = f"Anúncio foi atualizado em {_state}!\nValor antigo: {_price_current}\nValor novo: {_price}\n{car}"
@@ -680,8 +714,12 @@ def get_car(car):
                                 ),
                                 date=get_datetime_epoch(),
                             )
-                            conn.execute(sql)
-                            logger.debug(f"Added data into table: notification")
+
+                            try:
+                                conn.execute(sql)
+                                logger.debug(f"Added data into table: notification")
+                            except Exception as e:
+                                logger.error(f"SQL operation failed: {repr(e)}")
 
                         return 2
     else:
@@ -908,11 +946,18 @@ def main():
         region=car_location,
         date=get_datetime_epoch(),
     )
-    conn.execute(sql)
-    logger.info("Saved table: status")
+
+    try:
+        conn.execute(sql)
+        logger.info("Saved table: status")
+    except Exception as e:
+        logger.error(f"SQL operation failed: {repr(e)}")
 
     """ MQTT """
-    result = conn.execute(select([func.avg(table_offer.c.price)]))
+    try:
+        result = conn.execute(select([func.avg(table_offer.c.price)]))
+    except Exception as e:
+        logger.error(f"SQL operation failed: {repr(e)}")
     avg_price = round(result.fetchone()[0], 2)
 
     update_mqtt("found", cars_found)
